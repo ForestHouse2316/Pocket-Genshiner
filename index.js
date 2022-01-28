@@ -23,8 +23,11 @@ function setSideMenuExtension() {
     var menuIcon = document.getElementById('menu_icon');
     menuIcon.addEventListener('click', function(){
         var menuElem = document.getElementById('menu_bar');
+        var menuSpace = document.getElementById('menu_space');
         menuElem.classList.toggle('menu_close');
-        menuElem.classList.toggle('menu_open');      
+        menuElem.classList.toggle('menu_open');
+        menuSpace.classList.toggle('menu_close');
+        menuSpace.classList.toggle('menu_open');
     });
 }
 

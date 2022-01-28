@@ -61,11 +61,8 @@ container::-webkit-scrollbar {
 }
 
 #menu_space {
-    margin: 0 -24rem 0 0;
-    padding: 0;
-    width: 30rem;
     height: 100%;
-    z-index: 50;
+    padding: 0;
 }
 
 #menu_bar {
@@ -79,6 +76,14 @@ container::-webkit-scrollbar {
     justify-content: space-between;
 }
 
+#menu_space.menu_open {
+    width: 30rem;
+    margin: 0 -24rem 0 0;
+}
+#menu_space.menu_close{
+    width: 4rem;
+    margin: 0 2rem 0 0;
+}
 #menu_bar.menu_open {
     width: 25rem;
     margin-right: -25rem;
