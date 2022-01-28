@@ -13,14 +13,18 @@ p {
 
 container {
     overflow-y: scroll;
-    padding-right: 22px;
+    overflow-x: auto;
+    padding-right: 12px;
     margin-right: 10px;
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-    height: calc(100% - 1em);
-    width: calc(100% - 40px);
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    height: calc(100% - 1rem);
+    /* 100% - (rM + rP + bar width) - menu_bar - menu_bar margin */
+    /* right gap : 30px */ /* EXCEPT SCROLLBAR WIDTH 8px */
+    /* left gap : 5px */
+    width: calc(100% - 22px - 4rem - 10px);
     max-height: 100%;
-    max-width: calc(100% - 40px);
+    /* max-width: calc(100% - 40px); */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -56,16 +60,8 @@ container::-webkit-scrollbar {
     width: 100%;
     display: flex;
     align-items:flex-start;
-    justify-content: left;
+    justify-content: space-between;
     flex-direction: row;
-}
-
-#menu_space {
-    margin: 0 -24rem 0 0;
-    padding: 0;
-    width: 30rem;
-    height: 100%;
-    z-index: 50;
 }
 
 #menu_bar {
@@ -77,6 +73,7 @@ container::-webkit-scrollbar {
     transition: 0.5s;
     transition-timing-function: cubic-bezier(0.43, 0.49, 0.03, 1.04);
     justify-content: space-between;
+    z-index: 50;
 }
 
 #menu_bar.menu_open {
