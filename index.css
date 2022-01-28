@@ -1,0 +1,145 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    user-select: none;
+    -webkit-user-select:none;
+    -mox-user-select:none;
+    -ms-user-select: none;
+}
+p {
+    font-size: 2em;
+}
+
+container {
+    overflow-y: scroll;
+    padding-right: 22px;
+    margin-right: 10px;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    height: calc(100% - 1em);
+    width: calc(100% - 40px);
+    max-height: 100%;
+    max-width: calc(100% - 40px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+}
+iframe, webview {
+    border: 0;
+    width: 100%;
+    height: 100%;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+container::-webkit-scrollbar {
+    width:8px;
+}
+
+#content_frame {
+    height: 100%;
+    width: 100%;
+    transition: 0.2s;
+}
+#content_frame.visible {
+    opacity: 1;
+}
+#content_frame.invisible {
+    opacity: 0;
+}
+
+.upmost_container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items:flex-start;
+    justify-content: left;
+    flex-direction: row;
+}
+
+#menu_space {
+    margin: 0 -24rem 0 0;
+    padding: 0;
+    width: 30rem;
+    height: 100%;
+    z-index: 50;
+}
+
+#menu_bar {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    transition: 0.5s;
+    transition-timing-function: cubic-bezier(0.43, 0.49, 0.03, 1.04);
+    justify-content: space-between;
+}
+
+#menu_bar.menu_open {
+    width: 25rem;
+    margin-right: -25rem;
+}
+#menu_bar.menu_close{
+    width: 4rem;
+    margin-right: -4rem;
+}
+
+#menu_icon { 
+    height: 2em !important;
+    width: 2em !important;
+}
+.menu_close #menu_icon, .menu_close .menu_item img {
+    padding: 1em;
+    width: 2em;
+    transition: 0.5s;
+}
+.menu_open #menu_icon, .menu_open .menu_item img {
+    padding: 1em;
+    width: 3em;
+    transition: 0.5s;
+}
+
+.interaction_shade:hover {
+    background: #00000030;
+}
+.interaction_shade:active {
+    background: #00000070;
+}
+
+#menu_separator {
+    height: 2px;
+    width: calc(100% - 0.2em);
+    margin: 0.4em 0.1em;
+}
+
+.menu_item {
+    width: 100%;
+    height: 6em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.menu_item p {
+    margin: 0 0.5em;
+}
+.menu_open .menu_item p {
+    opacity: 1;
+    font-size: 1.5em;
+    transition: 0.5s;
+}
+.menu_close .menu_item p {
+    opacity: 0;
+    font-size: 0em;
+    transition: 0.2s
+}
+
+#check-in_link {
+    width: 0;
+    height: 0;
+}

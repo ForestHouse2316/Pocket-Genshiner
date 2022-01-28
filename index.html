@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; frame-src 'self' https://webstatic-sea.mihoyo.com https://www.hoyolab.com;">
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" type="text/css" href="index_dark.css">
+    <script type="text/javascript" src="index.js">
+    </script>
+    <title>👜 Pocket Genshiner 🌠</title>
+  </head>
+  <body>
+    <div class="upmost_container">
+      <div id="menu_space">
+        <div class="menu_close" id="menu_bar">
+          <!-- ----------------------------------------------- -->
+          <div id="menu_setting_spacer">
+            <img id="menu_icon" class="interaction_shade">
+            <img id="menu_separator">
+            <div class="menu_item interaction_shade" id="dashboard">
+              <img id="dashboard_img">
+              <p>Dashboard</p>
+            </div>
+            <div class="menu_item interaction_shade" id="check-in">
+              <img id="check-in_img">
+              <p>Check-in</p>
+              <a href="https://www.naver.com" tabindex="-1" id="check-in_link" name="check-in_link" target="_blank"></a>
+            </div>
+            <div class="menu_item interaction_shade" id="map">
+              <img id="map_img">
+              <p>Official Map</p>
+            </div>
+            <div class="menu_item interaction_shade" id="guide">
+              <img id="guide_img">
+              <p>Guide</p>
+            </div>
+          </div>
+          <!-- ----------------------------------------------- -->
+          <div class="menu_item interaction_shade" id="setting">
+            <img id="setting_img">
+            <p>Setting</p>
+          </div>
+        </div>
+      </div>
+      <container>
+        <webview class="visible" id="content_frame" title="frame" useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246"></webview>
+      </container>
+    </div>
+  </body>
+</html>

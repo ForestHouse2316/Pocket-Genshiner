@@ -1,0 +1,23 @@
+{
+  "name": "pocket-genshiner",
+  "version": "0.0.0",
+  "description": "The all-in-one Genshin information that is in your hand",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build:win": "electron-builder --win portable --x64"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ForestHouse2316/Pocket-Genshiner.git"
+  },
+  "author": "ForestHouse",
+  "license": "AGPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/ForestHouse2316/Pocket-Genshiner/issues"
+  },
+  "homepage": "https://github.com/ForestHouse2316/Pocket-Genshiner#readme",
+  "devDependencies": {
+    "electron": "^16.0.7"
+  }
+}

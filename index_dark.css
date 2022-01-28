@@ -1,0 +1,40 @@
+h1, h2, h3, h4, h5, h6, p, pre {
+    color: white;
+}
+container::-webkit-scrollbar-track {
+    background-color: #00012988;
+    border-radius: 100px;
+}
+container::-webkit-scrollbar-thumb {
+    background-color: #3c3e86;
+    border-radius: 100px;
+}
+
+.upmost_container, body {
+    background: #171836;
+}
+#menu_bar {
+    background: #404188;
+}
+#menu_icon {
+    content: url("res/menu_white.png");
+}
+#menu_separator {
+    content: url("res/separation_line_white.png");
+    opacity: 0.5;
+}
+#dashboard_img {
+    content: url("res/dashboard_white.png");
+}
+#check-in_img {
+    content: url("res/check-in_white.png");
+}
+#map_img {
+    content: url("res/map_white.png");
+}
+#guide_img {
+    content: url("res/guide_white.png");
+}
+#setting_img {
+    content: url("res/setting_white.png");
+}
