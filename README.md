@@ -4,9 +4,9 @@ The all-in-one Genshin information that is in your hand
 
 
 ## Development Plans
-- GADC's function
+- ~~GADC's function~~
 - Spiral Abyss' data collection
-- Rezin notifier
+- Rezin timer
 - Genshin official map sync
 
 ## Progress
