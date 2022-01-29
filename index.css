@@ -43,15 +43,15 @@ container::-webkit-scrollbar {
     width:8px;
 }
 
-#content_frame {
+.content_container {
     height: 100%;
     width: 100%;
     transition: 0.2s;
 }
-#content_frame.visible {
+.content_container.visible {
     opacity: 1;
 }
-#content_frame.invisible {
+.content_container.invisible {
     opacity: 0;
 }
 
@@ -100,12 +100,6 @@ container::-webkit-scrollbar {
     transition: 0.5s;
 }
 
-.interaction_shade:hover {
-    background: #00000030;
-}
-.interaction_shade:active {
-    background: #00000070;
-}
 
 #menu_separator {
     height: 2px;
