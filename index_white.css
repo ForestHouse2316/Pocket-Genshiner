@@ -1,0 +1,47 @@
+h1, h2, h3, h4, h5, h6, p, pre {
+    color: #4e4597;
+}
+container::-webkit-scrollbar-track {
+    background-color: #2b2b5c88;
+    border-radius: 100px;
+}
+container::-webkit-scrollbar-thumb {
+    background-color: #a6a9ff;
+    border-radius: 100px;
+}
+
+.upmost_container, body {
+    background: white;
+}
+#menu_bar {
+    background: #d8ffe5;
+}
+#menu_icon {
+    content: url("res/menu_dark.png");
+}
+#menu_separator {
+    content: url("res/separation_line_dark.png");
+    opacity: 0.5;
+}
+#dashboard_img {
+    content: url("res/dashboard_dark.png");
+}
+#check-in_img {
+    content: url("res/check-in_dark.png");
+}
+#map_img {
+    content: url("res/map_dark.png");
+}
+#guide_img {
+    content: url("res/guide_dark.png");
+}
+#setting_img {
+    content: url("res/setting_dark.png");
+}
+
+.interaction_shade:hover {
+    background: #c38fff30;
+}
+.interaction_shade:active {
+    background: #c38fff70;
+}

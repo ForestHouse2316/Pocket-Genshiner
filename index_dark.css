@@ -38,3 +38,10 @@ container::-webkit-scrollbar-thumb {
 #setting_img {
     content: url("res/setting_white.png");
 }
+
+.interaction_shade:hover {
+    background: #00000030;
+}
+.interaction_shade:active {
+    background: #00000070;
+}
