@@ -1,4 +1,4 @@
-var currentPage = null;
+var currentPage = '';
 
 window.addEventListener('load', function(){
     console.log("--Page Load--");
@@ -24,11 +24,8 @@ function setSideMenuExtension() {
     var menuIcon = document.getElementById('menu_icon');
     menuIcon.addEventListener('click', function(){
         var menuElem = document.getElementById('menu_bar');
-        var menuSpace = document.getElementById('menu_space');
         menuElem.classList.toggle('menu_close');
         menuElem.classList.toggle('menu_open');
-        menuSpace.classList.toggle('menu_close');
-        menuSpace.classList.toggle('menu_open');
     });
 }
 
@@ -39,12 +36,10 @@ function setMenuSelectListener() {
     var guide = document.getElementById('guide');
     var setting = document.getElementById('setting');
 
-    changeFrame("dashboard/dashboard.html");  // initial page setting
-    currentPage = "dashboard";
+    changeFrame("dashboard");  // initial page setting
 
     dashboard.addEventListener('click', function(){
-        changeFrame("dashboard/dashboard.html");
-        currentPage = "dashboard";
+        changeFrame("dashboard");
     });
     check_in.addEventListener('click', function() {
         changeFrame("check-in");
@@ -53,25 +48,26 @@ function setMenuSelectListener() {
     map.addEventListener('click', function() {
         changeFrame("https://webstatic-sea.mihoyo.com/app/ys-map-sea/index.html?utm_source=tools&bbs_theme_device=1#/map/2");
         document.querySelector("#content_webview").shadowRoot.querySelector("iframe").height = '100%';
-        currentPage = "map";
     });
     guide.addEventListener('click', function() {
-        changeFrame("dashboard/dashboard.html");
-        currentPage = "guide";
+        changeFrame("guide");
     });
     setting.addEventListener('click', function() {
-        changeFrame("dashboard/dashboard.html");
-        currentPage = "setting";
+        changeFrame("setting");
     });
     
 }
 
-function changeFrame(path) {
-    var webview = document.getElementById('content_webview');
-    var iframe = document.getElementById('content_iframe');
+function changeFrame(page) {
+    // declare frame objects
+    var frames = {
+        'webview': document.getElementById('content_webview'),
+        'dashboard': document.getElementById('dashboard_div'),
+        'guide': document.getElementById('guide_div'),
+        'setting': document.getElementById('setting_div')
+    };
 
     // close menu bar automatically if it is opened
-
     var openedMenuBar = null;
     try {
         openedMenuBar = document.getElementsByClassName("menu_open")[0];
@@ -82,26 +78,31 @@ function changeFrame(path) {
     }
 
     // fading effect, except the case of opening it in external browser
-
     function toggleVisibility() {
-        iframe.classList.toggle('visible');
-        iframe.classList.toggle('invisible');
-        webview.classList.toggle('visible');
-        webview.classList.toggle('invisible');
+        Object.values(frames).forEach(frame => {
+            frame.classList.toggle('visible');
+            frame.classList.toggle('invisible');
+        });
     }
     function makeVisible() {
         setTimeout(() => {
             toggleVisibility();
         }, 100);  // invisibility sustain time
     }
-    if(path != "check-in") {
+    function displayNoneAll() {
+        Object.values(frames).forEach(frame => {
+            frame.style.display = 'none';
+        });
+    }
+
+    if(page != "check-in") {
         // set as invisible
         toggleVisibility();
 
-        if(path.indexOf("https://") != -1) {  // if path contains url, use webview
+        if(page.indexOf("https://") != -1) {  // if path contains url, use webview
             setTimeout(() => {  // frame's transition duration is 200ms
-                iframe.style.display = 'none';
-                webview.style.display = 'block';
+                displayNoneAll();
+                frames['webview'].style.display = 'block';  // overwrite
                 /*
                 Won't compare like this :
                 var domain = path.split('://')[1].split();
@@ -110,21 +111,26 @@ function changeFrame(path) {
                 var same = false;
                 var urls = ['webstatic-sea.mihoyo.com/app/ys-map-sea/index.html'];
                 urls.forEach((url) => {
-                    if(webview.src.indexOf(url) != -1 && path.indexOf(url) != -1) {
+                    if(frames['webview'].src.indexOf(url) != -1 && page.indexOf(url) != -1) {
                         same = true;
                         return;
                     }
                 });
-                same ? null : webview.src = path;
+                same ? null : frames['webview'].src = page;
                 makeVisible();
             }, 300);
         }
         else {
             setTimeout(() => {  // frame's transition duration is 200ms
-                iframe.style.display = 'block';
-                webview.style.display = 'none';
-                iframe.src != path ? iframe.src = path : null;
+                
+                console.log("C : " + currentPage);
+                console.log("T : " + page);
+                if(currentPage != page) {
+                    displayNoneAll();
+                    frames[page].style.display = 'block';  // overwrite
+                }
                 makeVisible();
+                currentPage = page;  // set currentPage after this work ended
             }, 300);
         }
 
