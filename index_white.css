@@ -1,11 +1,11 @@
 h1, h2, h3, h4, h5, h6, p, pre {
     color: #4e4597;
 }
-#content_iframe::-webkit-scrollbar-track {
+#container::-webkit-scrollbar-track {
     background-color: #2b2b5c88;
     border-radius: 100px;
 }
-#content_iframe::-webkit-scrollbar-thumb {
+#container::-webkit-scrollbar-thumb {
     background-color: #a6a9ff;
     border-radius: 100px;
 }

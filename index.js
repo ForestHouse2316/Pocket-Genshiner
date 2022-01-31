@@ -1,5 +1,9 @@
 var currentPage = '';
 
+// set the padding according to this value
+// basically 'no_scrollbar' class is disabled in 'index.html'
+var isScrollEnabled = true;
+
 window.addEventListener('load', function(){
     console.log("--Page Load--");
     setSideMenuExtension();
@@ -84,7 +88,7 @@ function changeFrame(page) {
             frame.classList.toggle('invisible');
         });
     }
-    function makeVisible() {
+    function makeVisible() {  // do after all operations have been done
         setTimeout(() => {
             toggleVisibility();
         }, 100);  // invisibility sustain time
@@ -94,14 +98,25 @@ function changeFrame(page) {
             frame.style.display = 'none';
         });
     }
+    function setScrollbarEnablement(enable) {
+        // [already enabled = true , set as enabled = true] = won't be changed
+        if(isScrollEnabled != enable) {
+            document.getElementById('container').classList.toggle('no_scrollbar');
+            isScrollEnabled = enable;
+        }
+    }
 
     if(page != "check-in") {
+        console.log("C : " + currentPage);
+        console.log("To : " + page);
+
         // set as invisible
         toggleVisibility();
 
         if(page.indexOf("https://") != -1) {  // if path contains url, use webview
             setTimeout(() => {  // frame's transition duration is 200ms
                 displayNoneAll();
+                setScrollbarEnablement(false);
                 frames['webview'].style.display = 'block';  // overwrite
                 /*
                 Won't compare like this :
@@ -118,15 +133,14 @@ function changeFrame(page) {
                 });
                 same ? null : frames['webview'].src = page;
                 makeVisible();
+                currentPage = page;  // set currentPage after this work ended
             }, 300);
         }
         else {
             setTimeout(() => {  // frame's transition duration is 200ms
-                
-                console.log("C : " + currentPage);
-                console.log("T : " + page);
                 if(currentPage != page) {
                     displayNoneAll();
+                    setScrollbarEnablement(true);
                     frames[page].style.display = 'block';  // overwrite
                 }
                 makeVisible();
