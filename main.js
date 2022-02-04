@@ -1,37 +1,40 @@
-const { app, BrowserWindow } = require('electron');
-const { ipcMain } = require('electron');
-const path = require('path');
-// const index_js = require('./index.js');
+const { app, BrowserWindow } = require("electron");
+const { ipcMain } = require("electron");
+const path = require("path");
+const DataManager = require("./DataManager.js");
 
-app.whenReady().then(() => {  // Anonymous func executed after loading completly
-  createWindow();
-})
+app.whenReady().then(() => {
+    // Anonymous func executed after loading completly
+    createWindow();
+});
 
 const createWindow = () => {
     const win = new BrowserWindow({
-      width: 1200,
-      height: 800,
-      webPreferences: {
-        nodeIntegration: true,
-        webviewTag: true,
-        preload: path.join(__dirname, 'preload.js')
-      }
+        width: 1200,
+        height: 800,
+        webPreferences: {
+            nodeIntegration: true,
+            webviewTag: true,
+            preload: path.join(__dirname, "preload.js"),
+        },
     });
-    win.loadFile('index.html');
-}
+    DataManager.initialize();
+    win.loadFile("index.html");
+    DataManager.log("App started");
+};
 
-  // ipcMain.on('openURL', (arg) => {
-  //   shell.openExternal(arg);
-  // });
+ipcMain.on("query", (event, path) => {
+    event.returnValue(DataManager.query(path));
+});
+ipcMain.on("save", (event) => {
+    DataManager.save();
+});
+ipcMain.on("log", (event, msg) => {
+    DataManager.log(msg);
+});
 
-
-
-
-
-
-
-  function sleep(ms){
+function sleep(ms) {
     ts1 = new Date().getTime() + ms;
-    do ts2 = new Date().getTime(); while (ts2<ts1);
-  }
-
+    do ts2 = new Date().getTime();
+    while (ts2 < ts1);
+}
