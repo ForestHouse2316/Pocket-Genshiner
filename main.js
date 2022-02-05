@@ -24,7 +24,7 @@ const createWindow = () => {
 };
 
 ipcMain.on("query", (event, path) => {
-    event.returnValue(DataManager.query(path));
+    event.returnValue = DataManager.query(path);
 });
 ipcMain.on("save", (event) => {
     DataManager.save();

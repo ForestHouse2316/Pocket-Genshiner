@@ -8,8 +8,11 @@ window.addEventListener("load", function () {
     console.log("--Page Load--");
     setSideMenuExtension();
     setMenuSelectListener();
-    changeThemeTo("dark"); // Initial theme setting
+    setListeners();
+    changeThemeTo(window.api.query("setting/theme")); // Initial theme setting
 });
+
+// --------------------------------------------------------------------------------
 
 function sleep(ms) {
     ts1 = new Date().getTime() + ms;
@@ -51,6 +54,21 @@ function setMenuSelectListener() {
     });
     setting.addEventListener("click", function () {
         changeFrame("setting");
+    });
+}
+
+function setListeners() {
+    document.getElementById("resin_timer_button_1").addEventListener("click", () => {
+        setResinTimer(-10);
+    });
+    document.getElementById("resin_timer_button_2").addEventListener("click", () => {
+        setResinTimer(-20);
+    });
+    document.getElementById("resin_timer_button_3").addEventListener("click", () => {
+        setResinTimer(-40);
+    });
+    document.getElementById("resin_timer_button_4").addEventListener("click", () => {
+        setResinTimer(+10);
     });
 }
 
@@ -169,4 +187,67 @@ function enableCSS(elem) {
 }
 function disableCSS(elem) {
     elem.rel = "stylesheet alternate";
+}
+
+function setResinTimer(resin) {
+    // input the number of consumed resin
+    // 1 Resin = 8min
+    let timer = document.getElementById("resin_timer_display");
+    let times = timer.innerText.replace("Left", "").split(":"); // times = [h, m, s]
+    times = times.map((time) => parseInt(time));
+    times[1] -= resin * 8; // Resin consumption = Time increase
+    times = timeAligner(times);
+    if (times[0] > 21 || (times[0] == 21 && times[1] > 20)) {
+        // 21h limitation (resin * 160 = 21h)
+        times = ["21", "20", "00"];
+    } else if (times[0] < 0) {
+        times = ["00", "00", "00"];
+    } else {
+        times = makeDoubleDigitTime(times);
+    }
+    timer.innerHTML = times[0] + ":" + times[1] + ":" + times[2] + '<unit id="resin_timer_left">Left</unit>';
+    window.api.query;
+}
+
+function timeAligner(timeArr) {
+    let positive = true;
+    timeArr.forEach((time) => {
+        if (time < 0) {
+            positive = false;
+            return;
+        }
+    });
+    if (positive) {
+        // timeArr = [h, m, s]
+        if (timeArr[2] >= 60) {
+            // sec -> min
+            while (parseInt(timeArr[2] / 60) != 0) {
+                timeArr[1] += 1;
+                timeArr[2] -= 60;
+            }
+        }
+        if (timeArr[1] >= 60) {
+            // min -> hour
+            while (parseInt(timeArr[1] / 60) != 0) {
+                timeArr[0] += 1;
+                timeArr[1] -= 60;
+            }
+        }
+    } else {
+        while (timeArr[2] < 0) {
+            // min -> sec
+            timeArr[1] -= 1;
+            timeArr[2] += 60;
+        }
+        while (timeArr[1] < 0) {
+            // hour -> min
+            timeArr[0] -= 1;
+            timeArr[1] += 60;
+        }
+    }
+    return timeArr;
+}
+function makeDoubleDigitTime(timeArr) {
+    timeArr = timeArr.map((time) => (time < 10 ? (time = "0" + String(time)) : time));
+    return timeArr;
 }

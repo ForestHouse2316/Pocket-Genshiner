@@ -28,6 +28,7 @@ module.exports.initialize = () => {
                 guide: {},
                 setting: {
                     serverRegion: "Asia", // default server region is Asia
+                    theme: "dark",
                 },
             };
             this.save();
@@ -50,9 +51,7 @@ module.exports.save = () => {
     // non-sync
     fs.writeFile(jsonPath, JSON.stringify(jsonData), "utf-8", (err) => {
         if (err) {
-            console.log(
-                "Failed to save json data. If this continuously cause, please check the log"
-            );
+            console.log("Failed to save json data. If this continuously cause, please check the log");
             this.log(err);
         }
     });
@@ -63,13 +62,9 @@ module.exports.log = (msg) => {
     // non-sync
     fs.access(logPath, (err) => {
         if (err) {
-            fs.writeFileSync(
-                logPath,
-                "### Pocket Genshiner Log File ###\nPlease send this log file to [foresthouse2316@gmail.com] if there is any bug or problem.\n",
-                (err) => {
-                    console.log("Cannot create log.txt");
-                }
-            );
+            fs.writeFileSync(logPath, "### Pocket Genshiner Log File ###\nPlease send this log file to [foresthouse2316@gmail.com] if there is any bug or problem.\n", (err) => {
+                console.log("Cannot create log.txt");
+            });
         }
     });
     fs.appendFile(logPath, "\n[" + getTimeStamp() + "]  " + msg, (err) => {
@@ -82,15 +77,7 @@ module.exports.log = (msg) => {
 
 function getTimeStamp() {
     // YY/MM/DD hh:mm:ss GMT±0000
-    return (
-        date.getFullYear().toString() +
-        "/" +
-        (date.getMonth() + 1).toString() +
-        "/" +
-        date.getDate().toString() +
-        " " +
-        date.toTimeString().toString().split(" (")[0]
-    );
+    return date.getFullYear().toString() + "/" + (date.getMonth() + 1).toString() + "/" + date.getDate().toString() + " " + date.toTimeString().toString().split(" (")[0];
 }
 function getTime() {
     // from 1970.1.1

@@ -5,7 +5,8 @@ h4,
 h5,
 h6,
 p,
-pre {
+pre,
+unit {
     color: white;
 }
 .custon_scroll::-webkit-scrollbar-track {
@@ -53,6 +54,9 @@ body {
 .interaction_shade:active {
     background: #00000070;
 }
-.dashboard_border {
-    border-color: rgb(169, 239, 255);
+
+#resin_timer {
+    background: #c4e2ff20;
 }
+
+/* -----------------------NEW_PROPERTIES----------------------- */

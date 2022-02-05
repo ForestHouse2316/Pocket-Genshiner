@@ -5,7 +5,8 @@ h4,
 h5,
 h6,
 p,
-pre {
+pre,
+unit {
     color: #4e4597;
 }
 .custon_scroll::-webkit-scrollbar-track {
@@ -22,7 +23,7 @@ body {
     background: white;
 }
 #menu_bar {
-    background: #d8ffe5;
+    background: #d8fff3;
 }
 #menu_icon {
     content: url("res/menu_dark.png");
@@ -54,6 +55,7 @@ body {
     background: #c38fff70;
 }
 
-.dashboard_border {
-    border-color: rgb(168, 121, 221);
+#resin_timer {
+    background: #b356ff2a;
 }
+/* -----------------------NEW_PROPERTIES----------------------- */
