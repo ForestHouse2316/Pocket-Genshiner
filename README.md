@@ -10,8 +10,8 @@ The all-in-one Genshin information that is in your hand
 - Genshin official map sync
 
 ## Progress
-![p1](https://github.com/ForestHouse2316/Pocket-Genshiner/blob/readme/Document/p1.png?raw=true)
-![p2](https://github.com/ForestHouse2316/Pocket-Genshiner/blob/readme/Document/p2.png?raw=true)
+![p1](https://github.com/ForestHouse2316/Pocket-Genshiner/blob/readme/Document/1.png?raw=true)
+![p2](https://github.com/ForestHouse2316/Pocket-Genshiner/blob/readme/Document/2.png?raw=true)
 
 
 ## Contact
