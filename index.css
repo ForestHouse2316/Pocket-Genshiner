@@ -1,10 +1,11 @@
-html, body {
+html,
+body {
     width: 100%;
     height: 100%;
     margin: 0px;
     user-select: none;
-    -webkit-user-select:none;
-    -moz-user-select:none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
     -ms-user-select: none;
 }
 p {
@@ -36,15 +37,15 @@ p {
     flex-shrink: 0;
     flex-wrap: nowrap;
 }
-#container.no_scrollbar {
+.custon_scroll.no_scrollbar {
     padding-right: 0 !important;
     /* 100% - (rM + rP + bar width) - menu_bar - menu_bar margin + (removed padding) */
     width: calc(100% - 22px - 4rem - 10px + 12px) !important;
     /* overflow-y: hidden; */
 }
 
-#container::-webkit-scrollbar {
-    width:8px;
+.custon_scroll::-webkit-scrollbar {
+    width: 8px;
 }
 
 .content_container {
@@ -70,7 +71,7 @@ p {
     height: 100%;
     width: 100%;
     display: flex;
-    align-items:flex-start;
+    align-items: flex-start;
     justify-content: space-between;
     flex-direction: row;
     flex-shrink: 0;
@@ -92,26 +93,27 @@ p {
     width: 25rem;
     margin-right: -25rem;
 }
-#menu_bar.menu_close{
+#menu_bar.menu_close {
     width: 4rem;
     margin-right: -4rem;
 }
 
-#menu_icon { 
+#menu_icon {
     height: 2em !important;
     width: 2em !important;
 }
-.menu_close #menu_icon, .menu_close .menu_item img {
+.menu_close #menu_icon,
+.menu_close .menu_item img {
     padding: 1em;
     width: 2em;
     transition: 0.5s;
 }
-.menu_open #menu_icon, .menu_open .menu_item img {
+.menu_open #menu_icon,
+.menu_open .menu_item img {
     padding: 1em;
     width: 3em;
     transition: 0.5s;
 }
-
 
 #menu_separator {
     height: 2px;
@@ -139,10 +141,51 @@ p {
 .menu_close .menu_item p {
     opacity: 0;
     font-size: 0em;
-    transition: 0.2s
+    transition: 0.2s;
 }
 
-#check-in_link {
-    width: 0;
-    height: 0;
+.horizontal_layout {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+}
+.vertical_layout {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+.horizontal_full {
+    width: 100%;
+}
+.vertical_full {
+    height: 100%;
+}
+.horizontal_scroll {
+    height: 5rem;
+    width: 100%;
+    padding: 0;
+}
+
+.dashboard_border {
+    border-width: 0.5rem;
+    border-style: solid;
+    border-radius: 10px;
+    padding: 0rem 2rem 3rem;
+    margin: 2rem 1rem;
+}
+.dashboard_content_header {
+    margin-bottom: 2rem;
+}
+
+#resin_timer {
+    width: 30%;
+}
+#daily_material {
+    width: 60%;
+}
+.resin_img {
+    width: 3rem;
+    height: 3rem;
 }

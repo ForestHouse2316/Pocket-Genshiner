@@ -1,16 +1,24 @@
-h1, h2, h3, h4, h5, h6, p, pre {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+pre {
     color: white;
 }
-#container::-webkit-scrollbar-track {
+.custon_scroll::-webkit-scrollbar-track {
     background-color: #00012988;
     border-radius: 100px;
 }
-#container::-webkit-scrollbar-thumb {
+.custon_scroll::-webkit-scrollbar-thumb {
     background-color: #3c3e86;
     border-radius: 100px;
 }
 
-.upmost_container, body {
+.upmost_container,
+body {
     background: #171836;
 }
 #menu_bar {
@@ -44,4 +52,7 @@ h1, h2, h3, h4, h5, h6, p, pre {
 }
 .interaction_shade:active {
     background: #00000070;
+}
+.dashboard_border {
+    border-color: rgb(169, 239, 255);
 }

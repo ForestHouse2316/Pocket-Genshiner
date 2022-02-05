@@ -100,8 +100,12 @@ function changeFrame(page) {
     }
 
     if (page != "check-in") {
-        window.api.log("Change page from <" + currentPage + "> to <" + page + ">");
-
+        try {
+            window.api.log("Change page from <" + currentPage + "> to <" + page + ">");
+        } catch (error) {
+            // in html mode
+            console.log("Window successfully opend");
+        }
         // set as invisible
         toggleVisibility();
 
