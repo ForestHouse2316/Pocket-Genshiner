@@ -9,7 +9,8 @@ window.addEventListener("load", function () {
     setSideMenuExtension();
     setMenuSelectListener();
     setListeners();
-    changeThemeTo(window.api.query("setting/theme")); // Initial theme setting
+    changeThemeTo(window.api.getJson().setting.theme); // Initial theme setting
+    setResinTimer();
 });
 
 // --------------------------------------------------------------------------------
@@ -59,16 +60,16 @@ function setMenuSelectListener() {
 
 function setListeners() {
     document.getElementById("resin_timer_button_1").addEventListener("click", () => {
-        setResinTimer(-10);
+        adjustResinTimer(1, 20, 0, true);
     });
     document.getElementById("resin_timer_button_2").addEventListener("click", () => {
-        setResinTimer(-20);
+        adjustResinTimer(2, 40, 0, true);
     });
     document.getElementById("resin_timer_button_3").addEventListener("click", () => {
-        setResinTimer(-40);
+        adjustResinTimer(5, 20, 0, true);
     });
     document.getElementById("resin_timer_button_4").addEventListener("click", () => {
-        setResinTimer(+10);
+        adjustResinTimer(-1, -20, 0, true);
     });
 }
 
@@ -189,13 +190,22 @@ function disableCSS(elem) {
     elem.rel = "stylesheet alternate";
 }
 
-function setResinTimer(resin) {
+function setResinTimer() {
+    remainedTime = window.api.getJson().dashboard.resinTimer.lastRemainedTime;
+    document.getElementById("resin_timer_display").innerHTML = remainedTime + '<unit id="resin_timer_left">Left</unit>';
+    times = window.api.getTimer().map((time) => time * -1);
+    adjustResinTimer(times[0], times[1], times[2]);
+    setResinTimerCounter();
+}
+function adjustResinTimer(h, m, s, save = false) {
     // input the number of consumed resin
     // 1 Resin = 8min
     let timer = document.getElementById("resin_timer_display");
     let times = timer.innerText.replace("Left", "").split(":"); // times = [h, m, s]
     times = times.map((time) => parseInt(time));
-    times[1] -= resin * 8; // Resin consumption = Time increase
+    times[0] += h;
+    times[1] += m;
+    times[2] += s;
     times = timeAligner(times);
     if (times[0] > 21 || (times[0] == 21 && times[1] > 20)) {
         // 21h limitation (resin * 160 = 21h)
@@ -205,8 +215,16 @@ function setResinTimer(resin) {
     } else {
         times = makeDoubleDigitTime(times);
     }
-    timer.innerHTML = times[0] + ":" + times[1] + ":" + times[2] + '<unit id="resin_timer_left">Left</unit>';
-    window.api.query;
+    combinedTime = times[0] + ":" + times[1] + ":" + times[2];
+    timer.innerHTML = combinedTime + '<unit id="resin_timer_left">Left</unit>';
+    if (save) {
+        window.api.saveTimer(combinedTime);
+    }
+}
+function setResinTimerCounter() {
+    setInterval(() => {
+        adjustResinTimer(0, 0, -1);
+    }, 1000);
 }
 
 function timeAligner(timeArr) {

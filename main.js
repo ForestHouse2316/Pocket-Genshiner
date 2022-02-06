@@ -23,14 +23,22 @@ const createWindow = () => {
     DataManager.log("App started");
 };
 
-ipcMain.on("query", (event, path) => {
-    event.returnValue = DataManager.query(path);
+ipcMain.on("getJson", (event) => {
+    event.returnValue = DataManager.getJson();
 });
 ipcMain.on("save", (event) => {
     DataManager.save();
 });
 ipcMain.on("log", (event, msg) => {
     DataManager.log(msg);
+});
+ipcMain.on("saveTimer", (event, time) => {
+    DataManager.getJson().dashboard.resinTimer.lastSetTime = DataManager.getTime();
+    DataManager.getJson().dashboard.resinTimer.lastRemainedTime = time;
+    DataManager.save();
+});
+ipcMain.on("getTimer", (event) => {
+    event.returnValue = DataManager.calcTimeGap(DataManager.getJson().dashboard.resinTimer.lastSetTime);
 });
 
 function sleep(ms) {

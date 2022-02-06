@@ -1,4 +1,6 @@
+const { exec, execSync } = require("child_process");
 const fs = require("fs");
+const { stdout } = require("process");
 const date = new Date();
 const dirPath = "./data";
 const jsonPath = "./data/data.json";
@@ -19,11 +21,11 @@ module.exports.initialize = () => {
                 // initial form of the json structure
                 dashboard: {
                     resinTimer: {
-                        lastSetTime: getTime(),
+                        lastSetTime: this.getTime(),
                         lastRemainedTime: "00:00:00", // remained time at lastSetTime
                     },
                 },
-                "check-in": {},
+                checkIn: {},
                 map: {},
                 guide: {},
                 setting: {
@@ -38,28 +40,39 @@ module.exports.initialize = () => {
 };
 
 // Query form : q('key1/key2/···/keyn')
-module.exports.query = (path) => {
+module.exports.query = (path, newValue = null) => {
+    this.log("Querying :" + path);
     let keys = path.split("/");
-    let value = jsonData;
-    keys.forEach((key) => {
-        value = value[key];
-    });
-    return value;
+    if (newValue == null) {
+        let value = jsonData;
+        keys.forEach((key) => {
+            value = value[key];
+        });
+        return value;
+    }
+};
+
+module.exports.getJson = () => {
+    return jsonData;
 };
 
 module.exports.save = () => {
     // non-sync
+    this.log("Saving data to json...");
     fs.writeFile(jsonPath, JSON.stringify(jsonData), "utf-8", (err) => {
         if (err) {
-            console.log("Failed to save json data. If this continuously cause, please check the log");
-            this.log(err);
+            this.log("Save error : " + err);
+        } else {
+            this.log("Saving successful");
         }
     });
+
     return this;
 };
 
 module.exports.log = (msg) => {
     // non-sync
+
     fs.access(logPath, (err) => {
         if (err) {
             fs.writeFileSync(logPath, "### Pocket Genshiner Log File ###\nPlease send this log file to [foresthouse2316@gmail.com] if there is any bug or problem.\n", (err) => {
@@ -67,7 +80,7 @@ module.exports.log = (msg) => {
             });
         }
     });
-    fs.appendFile(logPath, "\n[" + getTimeStamp() + "]  " + msg, (err) => {
+    fs.appendFile(logPath, "\n[" + this.getTimeStamp() + "]  " + msg, (err) => {
         if (err) {
             console.log("Cannot add a log to log.txt");
         }
@@ -75,23 +88,23 @@ module.exports.log = (msg) => {
     return this;
 };
 
-function getTimeStamp() {
+module.exports.getTimeStamp = () => {
     // YY/MM/DD hh:mm:ss GMT±0000
     return date.getFullYear().toString() + "/" + (date.getMonth() + 1).toString() + "/" + date.getDate().toString() + " " + date.toTimeString().toString().split(" (")[0];
-}
-function getTime() {
+};
+module.exports.getTime = () => {
     // from 1970.1.1
     return date.getTime();
-}
+};
 
-function calcTimeGap(t1, t2 = getTime(), abs = true) {
+module.exports.calcTimeGap = (t1, t2 = this.getTime(), abs = true) => {
     // [t1] to [t2] calculation
     pn = t2 > t1 ? 1 : -1;
-    diff = MAth.abs(Math.round((t2 - t1) / 1000)); // millisec to sec with rounding off
+    diff = Math.abs(Math.round((t2 - t1) / 1000)); // millisec to sec with rounding off
     // 3600s = 1h, 60s = 1m
     s = diff % 60;
     diff = parseInt(diff / 60); // now diff mean "minute"
     m = diff % 60;
     h = parseInt(diff / 60);
     return abs ? [h, m, s] : [h, m, s, pn];
-}
+};

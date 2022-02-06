@@ -4,13 +4,19 @@ contextBridge.exposeInMainWorld("api", {
     openURL: (path) => {
         shell.openExternal(path);
     },
-    query: (path) => {
-        return ipcRenderer.sendSync("query", path);
+    getJson: (path) => {
+        return ipcRenderer.sendSync("getJson");
     },
     save: () => {
         ipcRenderer.send("save");
     },
     log: (msg) => {
         ipcRenderer.send("log", msg);
+    },
+    saveTimer: (time) => {
+        ipcRenderer.send("saveTimer", time);
+    },
+    getTimer: () => {
+        return ipcRenderer.sendSync("getTimer");
     },
 });
