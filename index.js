@@ -209,18 +209,24 @@ function adjustResinTimer(h, m, s, save = false) {
     times = timeAligner(times);
     if (times[0] > 21 || (times[0] == 21 && times[1] > 20)) {
         // 21h limitation (resin * 160 = 21h)
-        times = ["21", "20", "00"];
+        times = [21, 20, 0];
     } else if (times[0] < 0) {
-        times = ["00", "00", "00"];
-    } else {
-        times = makeDoubleDigitTime(times);
+        times = [0, 0, 0];
     }
+    updateResinTNO(times[0], times[1]);
+    times = makeDoubleDigitTime(times);
     combinedTime = times[0] + ":" + times[1] + ":" + times[2];
     timer.innerHTML = combinedTime + '<unit id="resin_timer_left">Left</unit>';
     if (save) {
         window.api.saveTimer(combinedTime);
     }
 }
+function updateResinTNO(h, m) {
+    let resinNumDisplay = document.getElementById("resin_timer_tno_display");
+    let num = 160 - Math.ceil((h * 60 + m) / 8);
+    resinNumDisplay.innerText = num >= 0 ? num : 0;
+}
+
 function setResinTimerCounter() {
     setInterval(() => {
         adjustResinTimer(0, 0, -1);
