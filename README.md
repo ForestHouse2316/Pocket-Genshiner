@@ -6,7 +6,7 @@ The all-in-one Genshin information that is in your hand
 ## Development Plans
 - ~~GADC's function~~
 - Spiral Abyss' data collection
-- Rezin timer
+- Resin timer
 - Genshin official map sync
 
 ## Progress
