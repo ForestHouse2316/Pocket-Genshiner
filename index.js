@@ -1,8 +1,8 @@
-var currentPage = "init";
+let currentPage = "init";
 
 // set the padding according to this value
 // basically 'no_scrollbar' class is disabled in 'index.html'
-var isScrollEnabled = true;
+let isScrollEnabled = true;
 
 window.addEventListener("load", function () {
     console.log("--Page Load--");
@@ -11,6 +11,7 @@ window.addEventListener("load", function () {
     setListeners();
     changeThemeTo(window.api.getJson().setting.theme); // Initial theme setting
     setResinTimer();
+    initMaterialList();
 });
 
 // --------------------------------------------------------------------------------
@@ -59,6 +60,7 @@ function setMenuSelectListener() {
 }
 
 function setListeners() {
+    // resin timer buttons
     document.getElementById("resin_timer_button_1").addEventListener("click", () => {
         adjustResinTimer(1, 20, 0, true);
     });
@@ -71,6 +73,13 @@ function setListeners() {
     document.getElementById("resin_timer_button_4").addEventListener("click", () => {
         adjustResinTimer(-1, -20, 0, true);
     });
+
+    // daily material list buttons
+    for (let i = 1; i <= 4; i++) {
+        document.getElementById("daily_material_list_button_" + String(i)).addEventListener("click", () => {
+            setMaterialList(i);
+        });
+    }
 }
 
 function changeFrame(page) {
@@ -274,4 +283,51 @@ function timeAligner(timeArr) {
 function makeDoubleDigitTime(timeArr) {
     timeArr = timeArr.map((time) => (time < 10 ? (time = "0" + String(time)) : time));
     return timeArr;
+}
+
+function initMaterialList() {
+    let day = new Date().getDay();
+    switch (day) {
+        case 1:
+        case 4:
+            setMaterialList(1);
+            break;
+        case 2:
+        case 5:
+            setMaterialList(2);
+            break;
+        case 3:
+        case 6:
+            setMaterialList(3);
+            break;
+        default:
+            setMaterialList(4);
+            break;
+    }
+    document.getElementById("daily_material_list_button_" + String(day)).classList.toggle("today");
+}
+function setMaterialList(optNum) {
+    // 1 - Mon/Thu
+    // 2 - Tue/Fri
+    // 3 - Wed/Sat
+    // 4 - Sun
+
+    if (optNum == 4) {
+        optNum = [1, 2, 3];
+    } else {
+        optNum = [optNum];
+    }
+    let resPath = "res/ascension_domain_material/";
+    let kinds = ["character", "weapon"];
+    let regions = ["mond", "liyue", "inazuma"];
+    let list = document.getElementById("daily_material_list");
+    let imgElems = "";
+    kinds.forEach((kind) => {
+        regions.forEach((region) => {
+            optNum.forEach((num) => {
+                imgElems += '<img src="res/ascension_domain_material/' + kind + "_" + region + "_" + num + '.png" />\n';
+            });
+        });
+    });
+    list.innerHTML = imgElems;
 }

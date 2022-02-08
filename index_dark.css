@@ -9,11 +9,11 @@ pre,
 unit {
     color: white;
 }
-.custon_scroll::-webkit-scrollbar-track {
+.custom_scroll::-webkit-scrollbar-track {
     background-color: #00012988;
     border-radius: 100px;
 }
-.custon_scroll::-webkit-scrollbar-thumb {
+.custom_scroll::-webkit-scrollbar-thumb {
     background-color: #3c3e86;
     border-radius: 100px;
 }
@@ -54,9 +54,17 @@ body {
 .interaction_shade:active {
     background: #00000070;
 }
-
 #resin_timer {
     background: #c4e2ff20;
+}
+#daily_material {
+    background: #8bb4ff30;
+}
+#resin_timer_button_4 > p {
+    color: yellowgreen;
+}
+.dm_button.today > p {
+    color: rgb(205, 164, 50);
 }
 
 /* -----------------------NEW_PROPERTIES----------------------- */

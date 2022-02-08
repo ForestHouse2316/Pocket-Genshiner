@@ -9,11 +9,11 @@ pre,
 unit {
     color: #4e4597;
 }
-.custon_scroll::-webkit-scrollbar-track {
-    background-color: #2b2b5c88;
+.custom_scroll::-webkit-scrollbar-track {
+    background-color: #3f3f5888;
     border-radius: 100px;
 }
-.custon_scroll::-webkit-scrollbar-thumb {
+.custom_scroll::-webkit-scrollbar-thumb {
     background-color: #a6a9ff;
     border-radius: 100px;
 }
@@ -47,15 +47,23 @@ body {
 #setting_img {
     content: url("res/setting_dark.png");
 }
-
 .interaction_shade:hover {
     background: #c38fff30;
 }
 .interaction_shade:active {
     background: #c38fff70;
 }
-
 #resin_timer {
     background: #b356ff2a;
 }
+#daily_material {
+    background: #8bb4ff30;
+}
+#resin_timer_button_4 > p {
+    color: yellowgreen;
+}
+.dm_button.today > p {
+    color: rgb(205, 164, 50);
+}
+
 /* -----------------------NEW_PROPERTIES----------------------- */
