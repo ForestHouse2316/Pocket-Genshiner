@@ -1,23 +1,47 @@
 {
-  "name": "pocket-genshiner",
-  "version": "0.0.0",
-  "description": "The all-in-one Genshin information that is in your hand",
-  "main": "main.js",
-  "scripts": {
-    "start": "electron .",
-    "build:win": "electron-builder --win portable --x64"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ForestHouse2316/Pocket-Genshiner.git"
-  },
-  "author": "ForestHouse",
-  "license": "AGPL-3.0-or-later",
-  "bugs": {
-    "url": "https://github.com/ForestHouse2316/Pocket-Genshiner/issues"
-  },
-  "homepage": "https://github.com/ForestHouse2316/Pocket-Genshiner#readme",
-  "devDependencies": {
-    "electron": "^16.0.7"
-  }
+    "name": "pocket-genshiner",
+    "version": "0.0.0",
+    "description": "The all-in-one Genshin information that is in your hand",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron .",
+        "build:win": "electron-builder --win portable --x64",
+        "build:winInstaller": "electron-builder --win --x64"
+    },
+    "build": {
+        "appId": "foresthouse.pocket_genshiner",
+        "productName": "PocketGenshiner",
+        "asar": true,
+        "win": {
+            "target": [
+                {
+                    "target": "nsis",
+                    "arch": [
+                        "x64",
+                        "ia32"
+                    ]
+                }
+            ],
+            "icon": "res/pg.ico"
+        },
+        "nsis": {
+            "oneClick": false,
+            "allowToChangeInstallationDirectory": true,
+            "installerIcon": "res/pg.ico",
+            "createDesktopShortcut": true
+        }
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ForestHouse2316/Pocket-Genshiner.git"
+    },
+    "author": "ForestHouse",
+    "license": "AGPL-3.0-or-later",
+    "bugs": {
+        "url": "https://github.com/ForestHouse2316/Pocket-Genshiner/issues"
+    },
+    "homepage": "https://github.com/ForestHouse2316/Pocket-Genshiner#readme",
+    "devDependencies": {
+        "electron": "^16.0.7"
+    }
 }
