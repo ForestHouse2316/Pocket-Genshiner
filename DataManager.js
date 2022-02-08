@@ -1,7 +1,6 @@
 const { exec, execSync } = require("child_process");
 const fs = require("fs");
 const { stdout } = require("process");
-const date = new Date();
 const dirPath = "./data";
 const jsonPath = "./data/data.json";
 const logPath = "./data/log.txt";
@@ -90,10 +89,12 @@ module.exports.log = (msg) => {
 
 module.exports.getTimeStamp = () => {
     // YY/MM/DD hh:mm:ss GMT±0000
+    const date = new Date();
     return date.getFullYear().toString() + "/" + (date.getMonth() + 1).toString() + "/" + date.getDate().toString() + " " + date.toTimeString().toString().split(" (")[0];
 };
 module.exports.getTime = () => {
     // from 1970.1.1
+    const date = new Date();
     return date.getTime();
 };
 
