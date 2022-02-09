@@ -2,10 +2,15 @@ const { app, BrowserWindow } = require("electron");
 const { ipcMain } = require("electron");
 const path = require("path");
 const DataManager = require("./DataManager.js");
+const u = require("./update.js");
 
 app.whenReady().then(() => {
     // Anonymous func executed after loading completly
     createWindow();
+
+    DataManager.initialize();
+    win.loadFile("index.html");
+    DataManager.log("App started");
 });
 
 const createWindow = () => {
@@ -20,9 +25,6 @@ const createWindow = () => {
             preload: path.join(__dirname, "preload.js"),
         },
     });
-    DataManager.initialize();
-    win.loadFile("index.html");
-    DataManager.log("App started");
 };
 
 ipcMain.on("getJson", (event) => {
