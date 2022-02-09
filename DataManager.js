@@ -1,6 +1,4 @@
-const { exec, execSync } = require("child_process");
 const fs = require("fs");
-const { stdout } = require("process");
 const dirPath = "./data";
 const jsonPath = "./data/data.json";
 const logPath = "./data/log.txt";
