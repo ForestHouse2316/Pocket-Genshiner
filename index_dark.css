@@ -63,7 +63,8 @@ body {
 #resin_timer_button_4 > p {
     color: yellowgreen;
 }
-.dm_button.today > p {
+.dm_button.today > p,
+#daily_material_list_info {
     color: rgb(205, 164, 50);
 }
 
