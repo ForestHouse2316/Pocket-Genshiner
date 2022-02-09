@@ -1,7 +1,15 @@
-<version>0.2.0</version>
-<tag>alpha</tag>
+<stable>
+<ver>0.1.0</ver>
 <description>
-- New Feature : auto update
-- Fixes : some bugs
+- New Feature : Resin timer
 </description>
 <path>https://github.com/ForestHouse2316/Pocket-Genshiner/blob/main/Document/diff_btw_app&mobile.png?raw=true</path>
+</stable>
+<alpha>
+<ver>0.2.0</ver>
+<description>
+- New Feature : Daily material display
+- Fixes : Resin timer 'lastSetTime' setting issue
+</description>
+<path></path>
+</alpha>
