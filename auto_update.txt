@@ -1,0 +1,6 @@
+<version>0.2.0</version>
+<tag>alpha</tag>
+<description>
+- New Feature : auto update
+- Fixes : some bugs
+</description>
