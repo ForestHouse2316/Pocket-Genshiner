@@ -40,8 +40,12 @@
     "bugs": {
         "url": "https://github.com/ForestHouse2316/Pocket-Genshiner/issues"
     },
-    "homepage": "https://github.com/ForestHouse2316/Pocket-Genshiner#readme",
+    "homepage": "https://github.com/ForestHouse2316/Pocket-Genshiner",
     "devDependencies": {
         "electron": "^16.0.7"
+    },
+    "dependencies": {
+        "electron-dl": "^3.3.0",
+        "request": "^2.88.2"
     }
 }
