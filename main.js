@@ -34,6 +34,9 @@ const createWindow = () => {
             // 업데이트 할거냐고 물어보기
             // 만약 업데이트 한다고 카면 EzU.install(EzU.getLatest());
             console.log(EzU.getList()[0]);
+            EzU.install(EzU.getLatest(), (path) => {
+                console.log(path);
+            });
         }
     });
 };
