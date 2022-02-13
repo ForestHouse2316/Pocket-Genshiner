@@ -10,6 +10,14 @@
         "publish:winInstaller": "electron-builder --win --publish always"
     },
     "build": {
+        "files": [
+            "!works/*",
+            "!.gitignore",
+            "!ezu.html",
+            "!.prettierignore",
+            "!dist/*",
+            "!data/*"
+        ],
         "appId": "foresthouse.pocket_genshiner",
         "generateUpdatesFilesForAllChannels": true,
         "productName": "PocketGenshiner",
