@@ -19,4 +19,14 @@ contextBridge.exposeInMainWorld("api", {
     getTimer: () => {
         return ipcRenderer.sendSync("getTimer");
     },
+    checkUpdate: (callback) => {
+        // (EzU.getLatest())=>{}
+        callback(ipcRenderer.sendSync("checkUpdate"));
+    },
+    doUpdate: (callback) => {
+        ipcRenderer.on("updateProgress", (event, value) => {
+            callback(value);
+        });
+        ipcRenderer.send("doUpdate");
+    },
 });

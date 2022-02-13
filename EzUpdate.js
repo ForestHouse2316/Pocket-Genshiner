@@ -2,7 +2,15 @@ const Request = require("request");
 const Path = require("path");
 const { BrowserWindow } = require("electron");
 const { download } = require("electron-dl");
+const fs = require("fs");
 const EZU_VERSION = "1.0.0";
+
+/**
+ * ~~~ TODOs ~~~
+ * Make installation functions completely
+ *
+ * Add release's version such as beta3, rc2...
+ */
 
 /**
  * Release objects.
@@ -139,7 +147,7 @@ class EzUpdate {
      * Set the update checker works at every interval.
      * @param {()=>{}} callback
      * When this checker find an update-available version, callback will be called.
-     * @param {*} interval
+     * @param {int} interval
      * Set checking interval. Based on the hour. Default : 1hour
      * @returns
      */
@@ -147,7 +155,7 @@ class EzUpdate {
         // initial checking will be started after interval time
         this.updateChecker = setInterval(() => {
             this.getVerInfo(() => {
-                this.versionList = null;
+                this.versionList = [];
                 if (this.isUpdateAvailable()) {
                     callback();
                 }
@@ -181,7 +189,7 @@ class EzUpdate {
             this.rawHTML = html;
         });
         // observe
-        checker = setInterval(() => {
+        let checker = setInterval(() => {
             if (this.rawHTML != "") {
                 callback();
                 clearInterval(checker);
@@ -276,11 +284,12 @@ class EzUpdate {
      * If download path is null, your update file will be downloaded in the directory where this file is.
      *
      * This method doesn't contains any detailed install commands.
-     * So for updating works executed after downloading the file, you should code your update commands in callback,
-     * or this method will just download your file.
+     * So for updating works executed after downloading the file, you should code your update commands in callback.
+     * For your information, EzU is providing some methods about resource replacing.
+     * How about checking them out?
      * ```js
      * install(versionObj, null, (path) => {
-     *   // your own commands
+     *   // your own installation commands
      * });
      * ```
      * @param {Object} versionObj
@@ -303,6 +312,31 @@ class EzUpdate {
             downloadPath = Path.resolve("./EzUpdate.js").replace("EzUpdate.js", "");
         }
         this.download(versionObj.path, downloadPath, callback(downloadPath));
+    }
+
+    /**
+     * Download file.
+     * @param {String} url
+     * @param {String} dir
+     * @param {(path)=>{}} callback
+     * Called with download path after the download has been finished.
+     */
+    download(url, dir, callback) {
+        download(BrowserWindow.getFocusedWindow(), url, { directory: dir }).then((dl) => {
+            callback(dl.getSavePath());
+        });
+    }
+
+    mergeJSON(newJSONPath, oldJSONPath) {
+        let newJ = JSON.parse(fs.readFileSync(newJSONPath, "utf-8"));
+        let oldJ = JSON.parse(fs.readFileSync(oldJSONPath, "utf-8"));
+        fs.writeFileSync(oldJSONPath, JSON.stringify(Object.assign({}, newJ, oldJ)));
+    }
+
+    replaceResource(newRes, oldRes) {
+        fs.rmSync(oldRes);
+        fs.copyFileSync(newRes, oldRes);
+        fs.rmSync(newRes);
     }
 
     /**
@@ -349,19 +383,6 @@ class EzUpdate {
             // latest = b
             return 1;
         }
-    }
-
-    /**
-     * Download file.
-     * @param {String} url
-     * @param {String} dir
-     * @param {(path)=>{}} callback
-     * Called with download path after the download has been finished.
-     */
-    download(url, dir, callback) {
-        download(BrowserWindow.getFocusedWindow(), url, { directory: dir }).then((dl) => {
-            callback(dl.getSavePath());
-        });
     }
 }
 
