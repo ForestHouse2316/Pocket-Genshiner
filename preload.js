@@ -29,4 +29,7 @@ contextBridge.exposeInMainWorld("api", {
         });
         ipcRenderer.send("doUpdate");
     },
+    installUpdate: () => {
+        ipcRenderer.send("installUpdate");
+    },
 });

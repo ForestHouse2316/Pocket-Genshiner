@@ -114,6 +114,15 @@ function setListeners() {
                             percentText.innerText = String(percent) + "%";
                             bar.value = percent;
                             break;
+                        case "boolean":
+                            if (progress == true) {
+                                msgDiv.innerText = "Download has been finished. If you want to install, click me!";
+                                msgDiv.classList.add("visible");
+                                progressContainer.classList.remove("visible");
+                                msgDiv.addEventListener("click", () => {
+                                    window.api.installUpdate();
+                                });
+                            }
                         default:
                             break;
                     }

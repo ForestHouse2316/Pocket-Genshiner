@@ -78,4 +78,10 @@ ipcMain.on("doUpdate", (event) => {
         let status = { speed: progressObj.bytesPerSecond, percent: progressObj.percent, fraction: progressObj.transferred + "/" + progressObj.total };
         event.sender.send("updateProgress", status);
     });
+    autoUpdater.on("update_downloaded", () => {
+        event.sender.send(true);
+    });
+});
+ipcMain.on("installUpdate", (event) => {
+    autoUpdater.quitAndInstall();
 });
