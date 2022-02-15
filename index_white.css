@@ -1,23 +1,35 @@
-h1, h2, h3, h4, h5, h6, p, pre {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+pre,
+unit {
     color: #4e4597;
 }
-#container::-webkit-scrollbar-track {
-    background-color: #2b2b5c88;
+.custom_scroll::-webkit-scrollbar-track {
+    background-color: #3f3f5888;
     border-radius: 100px;
 }
-#container::-webkit-scrollbar-thumb {
+.custom_scroll::-webkit-scrollbar-thumb {
     background-color: #a6a9ff;
     border-radius: 100px;
 }
 
-.upmost_container, body {
+.upmost_container,
+body {
     background: white;
 }
 #menu_bar {
-    background: #d8ffe5;
+    background: #d8fff3;
 }
 #menu_icon {
     content: url("res/menu_dark.png");
+}
+#update_img {
+    content: url("res/download_dark.png");
 }
 #menu_separator {
     content: url("res/separation_line_dark.png");
@@ -38,10 +50,48 @@ h1, h2, h3, h4, h5, h6, p, pre {
 #setting_img {
     content: url("res/setting_dark.png");
 }
-
 .interaction_shade:hover {
     background: #c38fff30;
 }
 .interaction_shade:active {
     background: #c38fff70;
 }
+#resin_timer {
+    background: #b356ff2a;
+}
+#daily_material {
+    background: #8bb4ff30;
+}
+#resin_timer_button_4 > p {
+    color: yellowgreen;
+}
+.dm_button.today > p,
+#daily_material_list_info {
+    color: rgb(205, 164, 50);
+}
+
+#update {
+    background: #f8abff;
+}
+#update:hover {
+    background: #ce8ad4;
+}
+#update:active {
+    background: #7e4883;
+}
+#start_update_button {
+    background: linear-gradient(to bottom right, #ffeafb, #dee9ff, #dfffe5);
+}
+
+#update_progress_bar {
+    border-color: rgb(238, 152, 255);
+}
+
+#update_progress_bar::-webkit-progress-bar {
+    background-color: rgb(128, 128, 128);
+}
+#update_progress_bar::-webkit-progress-value {
+    background-color: rgb(41, 255, 209);
+}
+
+/* -----------------------NEW_PROPERTIES----------------------- */

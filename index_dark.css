@@ -1,16 +1,25 @@
-h1, h2, h3, h4, h5, h6, p, pre {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+pre,
+unit {
     color: white;
 }
-#container::-webkit-scrollbar-track {
+.custom_scroll::-webkit-scrollbar-track {
     background-color: #00012988;
     border-radius: 100px;
 }
-#container::-webkit-scrollbar-thumb {
+.custom_scroll::-webkit-scrollbar-thumb {
     background-color: #3c3e86;
     border-radius: 100px;
 }
 
-.upmost_container, body {
+.upmost_container,
+body {
     background: #171836;
 }
 #menu_bar {
@@ -18,6 +27,9 @@ h1, h2, h3, h4, h5, h6, p, pre {
 }
 #menu_icon {
     content: url("res/menu_white.png");
+}
+#update_img {
+    content: url("res/download_white.png");
 }
 #menu_separator {
     content: url("res/separation_line_white.png");
@@ -45,3 +57,41 @@ h1, h2, h3, h4, h5, h6, p, pre {
 .interaction_shade:active {
     background: #00000070;
 }
+#resin_timer {
+    background: #c4e2ff20;
+}
+#daily_material {
+    background: #8bb4ff30;
+}
+#resin_timer_button_4 > p {
+    color: yellowgreen;
+}
+.dm_button.today > p,
+#daily_material_list_info {
+    color: rgb(205, 164, 50);
+}
+
+#update {
+    background: #4ca0af;
+}
+#update:hover {
+    background: #418c99;
+}
+#update:active {
+    background: #26555e;
+}
+#start_update_button {
+    background: linear-gradient(to bottom right, #393a8a50, #2a2b7450, #1a1b6b50);
+}
+
+#update_progress_bar {
+    border-color: white;
+}
+#update_progress_bar::-webkit-progress-bar {
+    background-color: white;
+}
+#update_progress_bar::-webkit-progress-value {
+    background-color: rgb(41, 205, 255);
+}
+
+/* -----------------------NEW_PROPERTIES----------------------- */

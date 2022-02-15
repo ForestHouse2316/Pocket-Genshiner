@@ -1,127 +1,135 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' http://code.jquery.com; style-src 'self'; frame-src 'self' https://webstatic-sea.mihoyo.com https://www.hoyolab.com;">
-    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-    <link rel="stylesheet" type="text/css" href="index.css">
-    <link rel="stylesheet alternate" type="text/css" href="index_dark.css" id="theme_dark">
-    <link rel="stylesheet alternate" type="text/css" href="index_white.css" id="theme_white">
-    <script type="text/javascript" src="index.js"></script>
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <title>👜 Pocket Genshiner 🌠</title>
-  </head>
-  <body>
-    <div class="upmost_container">
-      <div class="menu_close" id="menu_bar">
-        <div id="menu_setting_spacer">
-          <img id="menu_icon" class="interaction_shade">
-          <img id="menu_separator">
-          <div class="menu_item interaction_shade" id="dashboard">
-            <img id="dashboard_img">
-            <p>Dashboard</p>
-          </div>
-          <div class="menu_item interaction_shade" id="check-in">
-            <img id="check-in_img">
-            <p>Check-in</p>
-          </div>
-          <div class="menu_item interaction_shade" id="map">
-            <img id="map_img">
-            <p>Official Map</p>
-          </div>
-          <div class="menu_item interaction_shade" id="guide">
-            <img id="guide_img">
-            <p>Guide</p>
-          </div>
+    <head>
+        <meta charset="UTF-8" />
+        <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' http://code.jquery.com; style-src 'self'; frame-src 'self' https://webstatic-sea.mihoyo.com https://www.hoyolab.com;" />
+        <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+        <link rel="stylesheet" type="text/css" href="index.css" />
+        <link rel="stylesheet alternate" type="text/css" href="index_dark.css" id="theme_dark" />
+        <link rel="stylesheet alternate" type="text/css" href="index_white.css" id="theme_white" />
+        <script type="text/javascript" src="index.js"></script>
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <title>👜 Pocket Genshiner 🌠</title>
+    </head>
+    <body>
+        <div class="upmost_container">
+            <div class="menu_close" id="menu_bar">
+                <div id="menu_setting_spacer">
+                    <img id="menu_icon" class="interaction_shade" />
+                    <div id="update_container"></div>
+                    <img id="menu_separator" />
+                    <div class="menu_item interaction_shade" id="dashboard">
+                        <img id="dashboard_img" />
+                        <p>Dashboard</p>
+                    </div>
+                    <div class="menu_item interaction_shade" id="check-in">
+                        <img id="check-in_img" />
+                        <p>Check-in</p>
+                    </div>
+                    <div class="menu_item interaction_shade" id="map">
+                        <img id="map_img" />
+                        <p>Official Map</p>
+                    </div>
+                    <div class="menu_item interaction_shade" id="guide">
+                        <img id="guide_img" />
+                        <p>Guide</p>
+                    </div>
+                </div>
+                <div class="menu_item interaction_shade" id="setting">
+                    <img id="setting_img" />
+                    <p>Setting</p>
+                </div>
+            </div>
+            <!-- ----------------------------------------------- -->
+            <div id="container" class="custom_scroll">
+                <div class="content_container visible" id="dashboard_div">
+                    <div id="dashboard_grid">
+                        <div id="resin_timer">
+                            <div id="resin_timer_header" class="dashboard_item_header">
+                                <img src="res/item/pure_resin.png" class="text_size_img" />
+                                <p class="text_with_img">Resin Timer</p>
+                                <img src="res/item/condensed_resin.png" class="text_size_img" />
+                            </div>
+                            <div id="resin_timer_tno">
+                                <p id="resin_timer_tno_display" class="text_with_img">0</p>
+                                <img src="res/item/pure_resin.png" />
+                            </div>
+                            <p id="resin_timer_display">00:00:00<unit id="resin_timer_left">Left</unit></p>
+                            <div id="resin_timer_button_1" class="interaction_shade resin_timer_button">
+                                <p class="text_with_img">-10</p>
+                                <img src="res/item/pure_resin.png" class="text_size_img" />
+                            </div>
+                            <div id="resin_timer_button_2" class="interaction_shade resin_timer_button">
+                                <p class="text_with_img">-20</p>
+                                <img src="res/item/pure_resin.png" class="text_size_img" />
+                            </div>
+                            <div id="resin_timer_button_3" class="interaction_shade resin_timer_button">
+                                <p class="text_with_img">-40</p>
+                                <img src="res/item/condensed_resin.png" class="text_size_img" />
+                            </div>
+                            <div id="resin_timer_button_4" class="interaction_shade resin_timer_button">
+                                <p class="text_with_img">+10</p>
+                                <img src="res/item/pure_resin.png" class="text_size_img" />
+                            </div>
+                        </div>
+                        <div id="daily_material">
+                            <div id="daily_material_header" class="dashboard_item_header">
+                                <img src="res/domain_rec.png" class="text_size_img" />
+                                <p class="text_with_img">Today's Material</p>
+                                <img src="res/domain_circle.png" class="text_size_img" />
+                            </div>
+                            <div id="daily_material_list" class="custom_scroll"></div>
+                            <p id="daily_material_list_info">ℹ️The colored day is today (doesn't mean the displaying one)</p>
+                            <div id="daily_material_list_button_1" class="interaction_shade dm_button">
+                                <p>Mon</p>
+                                <p>Thu</p>
+                            </div>
+                            <div id="daily_material_list_button_2" class="interaction_shade dm_button">
+                                <p>Tue</p>
+                                <p>Fri</p>
+                            </div>
+                            <div id="daily_material_list_button_3" class="interaction_shade dm_button">
+                                <p>Wed</p>
+                                <p>Sat</p>
+                            </div>
+                            <div id="daily_material_list_button_4" class="interaction_shade dm_button">
+                                <p>Sun</p>
+                            </div>
+                        </div>
+                        <div id="todo"><p>c</p></div>
+                    </div>
+                </div>
+                <!-- ----------------------------------------------- -->
+                <div class="content_container visible" id="guide_div">
+                    <p>Chhhhh.. Chhheek...</p>
+                    <p>We are doing a test now, plz wait</p>
+                </div>
+                <!-- ----------------------------------------------- -->
+                <div class="content_container visible" id="setting_div">
+                    <p>Set anything from here!</p>
+                    <p id="setting_theme_change" class="interaction_shade">Change Theme!</p>
+                </div>
+                <!-- ----------------------------------------------- -->
+                <div class="content_container visible custom_scroll" id="update_div">
+                    <p id="update_title">UPDATE</p>
+                    <p id="update_current_ver"></p>
+                    <p id="update_ver"></p>
+                    <p id="update_desc"></p>
+                    <p id="update_path"></p>
+                    <div id="update_msg"></div>
+                    <div id="update_status_container">
+                        <progress id="update_progress_bar" value="0" max="100"></progress>
+                        <p id="update_progress_percent"></p>
+                    </div>
+                    <div class="interaction_shade" id="start_update_button">
+                        <p>🍗Start update👉</p>
+                    </div>
+                </div>
+                <!-- ----------------------------------------------- -->
+                <webview class="content_container visible" id="content_webview" title="frame" useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246"></webview>
+                <!-- ----------------------------------------------- -->
+            </div>
         </div>
-        <div class="menu_item interaction_shade" id="setting">
-          <img id="setting_img">
-          <p>Setting</p>
-        </div>
-      </div>
-      <!-- ----------------------------------------------- -->
-      <div id="container">
-        <div class="content_container visible" id="dashboard_div">
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-          <p>Dashboard - I'm really tired now :'(</p>
-        </div>
-        <!-- ----------------------------------------------- -->
-        <div class="content_container visible" id="guide_div">
-          <p>Chhhhh.. Chhheek...</p>
-          <p>We are doing a test now, plz wait</p>
-        </div>
-        <!-- ----------------------------------------------- -->
-        <div class="content_container visible" id="setting_div">
-          <p>Set anything from here!</p>
-        </div>
-        <!-- ----------------------------------------------- -->
-        <webview class="content_container visible" id="content_webview" title="frame" useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246"></webview>
-        <!-- ----------------------------------------------- -->
-      </div>
-    </div>
-  </body>
+    </body>
 </html>
