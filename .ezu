@@ -1,13 +1,14 @@
 <alpha>
     <ver>0.0.0</ver>
-    <description> - Testing version for auto update </description>
-    <path></path>
+    <description>
+        Initial version of PocketGenshiner :)
+        New features : Resin Timer / Daily Material / Official map
+    </description>
+    <path>https://github.com/ForestHouse2316/Pocket-Genshiner/releases/tag/v0.0.0-alpha</path>
 </alpha>
 <alpha>
     <ver>0.0.1</ver>
     <description>
-        - New alpha version!
-        - And alsooooo testing the description display :)
+        Test : Auto-Upgrade system
     </description>
-    
 </alpha>
