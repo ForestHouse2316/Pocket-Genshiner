@@ -96,13 +96,15 @@ function setListeners() {
                 let bar = document.getElementById("update_progress_bar");
                 let percentText = document.getElementById("update_progress_percent");
                 let msgDiv = document.getElementById("update_msg");
+
                 window.api.doUpdate((progress) => {
                     switch (typeof progress) {
                         case "string":
+                            msgDiv.innerText = progress;
                             msgDiv.classList.add("visible");
                             progressContainer.classList.remove("visible");
                             if (progress.indexOf("Error") != -1) {
-                                frame.innerHTML = "";
+                                frame.innerHTML = ""; // remove update menu from menu bar
                             }
                             break;
                         case "object":

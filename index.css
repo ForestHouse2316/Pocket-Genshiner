@@ -453,7 +453,7 @@ progress {
 }
 #update_msg {
     transition: 0.5s;
-    font-size: 0s;
+    font-size: 0;
     height: 0;
     color: orange;
     font-weight: bold;
@@ -461,6 +461,7 @@ progress {
 #update_msg.visible {
     font-size: 1.5rem;
     height: 1.5rem;
+    color: orange;
 }
 #update_progress_bar::-webkit-progress-bar {
 }
