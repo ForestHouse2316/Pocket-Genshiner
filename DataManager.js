@@ -2,34 +2,35 @@ const fs = require("fs");
 const dirPath = "./data";
 const jsonPath = "./data/data.json";
 const logPath = "./data/log.txt";
-let jsonData; // use getJSON() to get this value
+let jsonData = {};
 
 module.exports.initialize = () => {
+    jsonData = {
+        // initial form of the json structure
+        dashboard: {
+            resinTimer: {
+                lastSetTime: this.getTime(),
+                lastRemainedTime: "00:00:00", // remained time at lastSetTime
+            },
+        },
+        checkIn: {},
+        map: {},
+        guide: {},
+        setting: {
+            serverRegion: "Asia", // default server region is Asia
+            theme: "dark",
+            updateChannel: { rel: "Stable", open: "<stable>", close: "</stable>" },
+        },
+    }; // use getJSON() to get this value
     fs.access(jsonPath, (err) => {
         if (!err) {
             // read json
-            jsonData = JSON.parse(fs.readFileSync(jsonPath, "utf-8"));
+            jsonData = Object.assign(jsonData, JSON.parse(fs.readFileSync(jsonPath, "utf-8")));
         } else {
             // if there's no json, make it
             if (!fs.existsSync(dirPath)) {
                 fs.mkdirSync(dirPath);
             }
-            jsonData = {
-                // initial form of the json structure
-                dashboard: {
-                    resinTimer: {
-                        lastSetTime: this.getTime(),
-                        lastRemainedTime: "00:00:00", // remained time at lastSetTime
-                    },
-                },
-                checkIn: {},
-                map: {},
-                guide: {},
-                setting: {
-                    serverRegion: "Asia", // default server region is Asia
-                    theme: "dark",
-                },
-            };
             this.save();
             return this;
         }

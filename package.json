@@ -1,15 +1,25 @@
 {
     "name": "pocket-genshiner",
-    "version": "0.0.0",
+    "version": "0.0.0-alpha",
     "description": "The all-in-one Genshin information that is in your hand",
     "main": "main.js",
     "scripts": {
         "start": "electron .",
         "build:win": "electron-builder --win portable --x64",
-        "build:winInstaller": "electron-builder --win --x64"
+        "build:winInstaller": "electron-builder --win --x64",
+        "publish:winInstaller": "electron-builder --win --publish always"
     },
     "build": {
+        "files": [
+            "!works/*",
+            "!.gitignore",
+            "!ezu.html",
+            "!.prettierignore",
+            "!dist/*",
+            "!data/*"
+        ],
         "appId": "foresthouse.pocket_genshiner",
+        "generateUpdatesFilesForAllChannels": true,
         "productName": "PocketGenshiner",
         "asar": true,
         "win": {
@@ -33,7 +43,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/ForestHouse2316/Pocket-Genshiner.git"
+        "url": "https://github.com/ForestHouse2316/Pocket-Genshiner.git"
     },
     "author": "ForestHouse",
     "license": "AGPL-3.0-or-later",
@@ -46,6 +56,7 @@
     },
     "dependencies": {
         "electron-dl": "^3.3.0",
+        "electron-updater": "^4.6.5",
         "request": "^2.88.2"
     }
 }

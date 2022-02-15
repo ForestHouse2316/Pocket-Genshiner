@@ -17,6 +17,7 @@
             <div class="menu_close" id="menu_bar">
                 <div id="menu_setting_spacer">
                     <img id="menu_icon" class="interaction_shade" />
+                    <div id="update_container"></div>
                     <img id="menu_separator" />
                     <div class="menu_item interaction_shade" id="dashboard">
                         <img id="dashboard_img" />
@@ -79,7 +80,7 @@
                                 <img src="res/domain_circle.png" class="text_size_img" />
                             </div>
                             <div id="daily_material_list" class="custom_scroll"></div>
-                            <p id="daily_material_list_info">ℹ️The colored day is today (doesn't match what's being shown)</p>
+                            <p id="daily_material_list_info">ℹ️The colored day is today (doesn't mean the displaying one)</p>
                             <div id="daily_material_list_button_1" class="interaction_shade dm_button">
                                 <p>Mon</p>
                                 <p>Thu</p>
@@ -108,6 +109,22 @@
                 <div class="content_container visible" id="setting_div">
                     <p>Set anything from here!</p>
                     <p id="setting_theme_change" class="interaction_shade">Change Theme!</p>
+                </div>
+                <!-- ----------------------------------------------- -->
+                <div class="content_container visible custom_scroll" id="update_div">
+                    <p id="update_title">UPDATE</p>
+                    <p id="update_current_ver"></p>
+                    <p id="update_ver"></p>
+                    <p id="update_desc"></p>
+                    <p id="update_path"></p>
+                    <div id="update_msg"></div>
+                    <div id="update_status_container">
+                        <progress id="update_progress_bar" value="0" max="100"></progress>
+                        <p id="update_progress_percent"></p>
+                    </div>
+                    <div class="interaction_shade" id="start_update_button">
+                        <p>🍗Start update👉</p>
+                    </div>
                 </div>
                 <!-- ----------------------------------------------- -->
                 <webview class="content_container visible" id="content_webview" title="frame" useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246"></webview>

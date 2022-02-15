@@ -5,3 +5,7 @@ package-lock.json
 /dist
 /data
 res/logo.psd
+ezu.html
+.prettierignore
+electron-builder.yml
+/works

@@ -80,6 +80,46 @@ function setListeners() {
             setMaterialList(i);
         });
     }
+
+    window.api.checkUpdate((latestObj) => {
+        let frame = document.getElementById("update_container");
+        frame.innerHTML = '<div class="menu_item interaction_shade update_invisible" id="update"><img id="update_img" /><p>🪄Update available✨</p></div>' + frame.innerHTML;
+        document.getElementById("update_current_ver").innerText = "Current version : " + latestObj.currentVer;
+        document.getElementById("update_ver").innerText = "Version : " + latestObj.ver + (latestObj.rel == "Stable" ? "" : " " + latestObj.rel);
+        document.getElementById("update_desc").innerText = latestObj.description;
+        document.getElementById("update_path").innerText = "Update path : " + latestObj.path;
+        document.getElementById("update").addEventListener("click", function () {
+            let updateButton = document.getElementById("start_update_button");
+            updateButton.addEventListener("click", () => {
+                updateButton.classList.toggle("clicked");
+                let progressContainer = document.getElementById("update_status_container");
+                let bar = document.getElementById("update_progress_bar");
+                let percentText = document.getElementById("update_progress_percent");
+                let msgDiv = document.getElementById("update_msg");
+                window.api.doUpdate((progress) => {
+                    switch (typeof progress) {
+                        case "string":
+                            msgDiv.classList.add("visible");
+                            progressContainer.classList.remove("visible");
+                            if (progress.indexOf("Error") != -1) {
+                                frame.innerHTML = "";
+                            }
+                            break;
+                        case "object":
+                            msgDiv.classList.remove("visible");
+                            progressContainer.classList.add("visible");
+                            let percent = parseFloat(progress.percent.replace("%", "")).toFixed(1);
+                            percentText.innerText = String(percent) + "%";
+                            bar.value = percent;
+                            break;
+                        default:
+                            break;
+                    }
+                });
+            });
+            changeFrame("update");
+        });
+    });
 }
 
 function changeFrame(page) {
@@ -89,6 +129,7 @@ function changeFrame(page) {
         dashboard: document.getElementById("dashboard_div"),
         guide: document.getElementById("guide_div"),
         setting: document.getElementById("setting_div"),
+        update: document.getElementById("update_div"),
     };
 
     // close menu bar automatically if it is opened
@@ -291,17 +332,21 @@ function initMaterialList() {
         case 1:
         case 4:
             setMaterialList(1);
+            day = 1;
             break;
         case 2:
         case 5:
             setMaterialList(2);
+            day = 2;
             break;
         case 3:
         case 6:
             setMaterialList(3);
+            day = 3;
             break;
         default:
             setMaterialList(4);
+            day = 4;
             break;
     }
     document.getElementById("daily_material_list_button_" + String(day)).classList.toggle("today");

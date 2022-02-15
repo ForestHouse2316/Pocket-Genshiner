@@ -28,6 +28,9 @@ body {
 #menu_icon {
     content: url("res/menu_white.png");
 }
+#update_img {
+    content: url("res/download_white.png");
+}
 #menu_separator {
     content: url("res/separation_line_white.png");
     opacity: 0.5;
@@ -66,6 +69,29 @@ body {
 .dm_button.today > p,
 #daily_material_list_info {
     color: rgb(205, 164, 50);
+}
+
+#update {
+    background: #4ca0af;
+}
+#update:hover {
+    background: #418c99;
+}
+#update:active {
+    background: #26555e;
+}
+#start_update_button {
+    background: linear-gradient(to bottom right, #393a8a50, #2a2b7450, #1a1b6b50);
+}
+
+#update_progress_bar {
+    border-color: white;
+}
+#update_progress_bar::-webkit-progress-bar {
+    background-color: white;
+}
+#update_progress_bar::-webkit-progress-value {
+    background-color: rgb(41, 205, 255);
 }
 
 /* -----------------------NEW_PROPERTIES----------------------- */

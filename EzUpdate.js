@@ -1,48 +1,111 @@
-const request = require("request");
+const Request = require("request");
+const Path = require("path");
 const { BrowserWindow } = require("electron");
 const { download } = require("electron-dl");
+const fs = require("fs");
 const EZU_VERSION = "1.0.0";
 
-// Releases
+/**
+ * ~~~ TODOs ~~~
+ * Make installation functions completely
+ *
+ * Add release's version such as beta3, rc2...
+ */
+
+/**
+ * Release objects.
+ * They're kind of tags about release version.
+ */
 const stable = { rel: "Stable", open: "<stable>", close: "</stable>" };
 const alpha = { rel: "Alpha", open: "<alpha>", close: "</alpha>" };
 const beta = { rel: "Beta", open: "<beta>", close: "</beta>" };
 const rc = { rel: "RC", open: "<rc>", close: "</rc>" };
+/**
+ * Release objects' group.
+ */
 module.exports.release = { stable: stable, alpha: alpha, beta: beta, rc: rc };
-// .ezu Elements
+
+/**
+ * The element's information which is used in ".ezu" file.
+ */
 const ver = { open: "<ver>", close: "</ver>" };
 const desc = { open: "<description>", close: "</description>" };
 const path = { open: "<path>", close: "</path>" };
 
 /**
- * Parameter Validation
- *
- * @const {Array} availVerSplitters
  * Contains available marks which is used in the version.
+ */
+const availVerSplitters = [".", "_", "-"];
+/**
+ * The order of each channel means the hierarchy of the channels.
+ * The precedest one is on the top of that.
  *
- * @const {Array} availRel
- * The order of each channel means the hierarchy of the channels. The precedest one is on the top of that.
- * For example, if user select alpha channel, all channel's update information will be retrieved.
+ * For example, let us suppose the code is
+ * ```js
+ * {const availRel = [alpha, beta, rc, stable];}
+ * ```
+ * If user select alpha channel, all channel's update information will be retrieved.
  * Equally, if user select stable channel, only stable channel's will be searched.
  * And also, the index of channels is a key value in array sorting. So backmost thing means the latest version.
  */
-const availVerSplitters = [".", "_", "-"];
 const availRel = [alpha, beta, rc, stable];
 
-// Release Order
+/**
+ * Decide what release will precede against other releases.
+ * The backmost thing is the latest version if the version numbering is same.
+ */
 const relOrder = [alpha.rel, beta.rel, rc.rel, stable.rel];
 
-// Http request observer
-let checker;
-
 class EzUpdate {
-    ezuUrl = ""; // .ezu url
-    currentVersion = ""; // program's current version
-    rawHTML = ""; // requested html (don't be changed until call "getVerInfo()" again.)
-    selectedChannel = stable; // update channel selecting
-    updateChecker; // "setInterval()" instance
-    updateList = []; // structured update information list
+    /**
+     * ```.ezu``` file's url.
+     */
+    ezuUrl = "";
+    /**
+     * Program's current version.
+     * ```js
+     * { ver: version, rel: release, }
+     * ```
+     */
+    currentVersion = "";
+    /**
+     * Store raw version of requested HTML.
+     * Will only be changed when ```getVerInfo()``` is called,
+     * or keep it's original value.
+     */
+    rawHTML = "";
+    /**
+     * Show what update channel (e.g. Beta channel, Preview channel, etc.) is selected now.
+     * Can be changed by call ```setChannel(channel)```
+     */
+    selectedChannel = stable;
+    /**
+     * Http request observer.
+     * @type {setInterval()}
+     *
+     * Be set by```setUpdateChecker(callback, frequency)```,
+     * cleared by ```clearUpdateChecker()```
+     */
+    updateChecker;
+    /**
+     * Structured version informations declared in ```.ezu``` file.
+     * You can access to this by call ```getList()```.
+     */
+    versionList = []; // structured update information list
 
+    /**
+     *
+     * @param {String} ezuUrl
+     * Url of ```.ezu``` file.
+     * @param {String} version
+     * Your program's current version. (e.g. 1.0.0)
+     * @param {Object} release
+     *  Release version such as ```release.beta```, ```release.rc```.
+     * @param {()=>{}} callback
+     * A callback called after ```.ezu``` request.
+     * @returns this
+     * @throws ```TypeError``` when get an unsupported version format or an Object that is not in the array ```release```.
+     */
     constructor(ezuUrl, version, release, callback) {
         // parameter ispection
         switch (true) {
@@ -69,40 +132,64 @@ class EzUpdate {
         return this;
     }
 
+    /**
+     * Change update channel to target channel.
+     * @param {Object} channel
+     * Target channel
+     * @returns this
+     */
     setChannel(channel) {
         this.selectedChannel = channel;
         return this;
     }
 
-    setUpdateChecker(callback, frequency = 1) {
+    /**
+     * Set the update checker works at every interval.
+     * @param {()=>{}} callback
+     * When this checker find an update-available version, callback will be called.
+     * @param {int} interval
+     * Set checking interval. Based on the hour. Default : 1hour
+     * @returns
+     */
+    setUpdateChecker(callback, interval = 1) {
         // initial checking will be started after interval time
         this.updateChecker = setInterval(() => {
             this.getVerInfo(() => {
-                this.updateList = null;
+                this.versionList = [];
                 if (this.isUpdateAvailable()) {
                     callback();
                 }
             });
-        }, frequency * 3600);
+        }, interval * 3600);
         return this;
     }
 
+    /**
+     * Clear update checker.
+     */
     clearUpdateChecker() {
         clearInterval(this.updateChecker);
     }
 
+    /**
+     * Update ```rawHTML``` with the content of ```.ezu``` file.
+     * @param {(html)=>{}} callback
+     * Called after works done.
+     * @param {int} timeout
+     * Set request timeout. Base on second. Default : 5sec
+     */
     getVerInfo(callback, timeout = 5) {
         // clear rawHTML
         this.rawHTML = "";
 
-        request(this.ezuUrl, (error, response, html) => {
+        Request(this.ezuUrl, (error, response, html) => {
             if (error) {
                 console.log('EzU : Cannot get the update data. Check the "ezuUrl" and your internet connection.');
             }
             this.rawHTML = html;
         });
         // observe
-        checker = setInterval(() => {
+        let checker = setInterval(() => {
             if (this.rawHTML != "") {
                 callback();
                 clearInterval(checker);
@@ -119,12 +206,16 @@ class EzUpdate {
         }, timeout * 1000);
     }
 
+    /**
+     * Query selected channel's available versions and push into ```versionList``` after structuralization.
+     * @returns this
+     */
     query() {
         // Search release that is in the selected channel
         let searchList = availRel.slice();
         let tempHTML = this.rawHTML.repeat(1);
         // initialize
-        this.updateList = [];
+        this.versionList = [];
 
         for (let i = 0; i < availRel.indexOf(this.selectedChannel); i++) {
             searchList.shift();
@@ -135,24 +226,35 @@ class EzUpdate {
                 let ePoint = tempHTML.indexOf(release.close);
                 let content = tempHTML.substring(sPoint + release.open.length, ePoint);
                 tempHTML = tempHTML.substring(0, sPoint) + tempHTML.substring(ePoint + release.close.length, tempHTML.length);
-                this.updateList.push(EzUpdate.structure(release, content));
+                this.versionList.push(EzUpdate.structure(release, content));
             }
         });
         return this;
     }
 
+    /**
+     * Sort the ```versionList``` in descending order.
+     * The latest version precedes in this list.
+     * @returns this
+     */
     sort() {
-        // The latest update precedes this array
-        this.updateList.sort((a, b) => EzUpdate.compareVer(a, b));
+        this.versionList.sort((a, b) => EzUpdate.compareVer(a, b));
         return this;
     }
 
+    /**
+     * @returns First element after sorting ```versionList```.
+     */
     getLatest() {
-        return this.sort().updateList[0];
+        return this.sort().versionList[0];
     }
 
+    /**
+     * Compare both the current program version and the current channel's latest version.
+     * @returns true when update is available, false when version is same or only downgrade version found.
+     */
     isUpdateAvailable() {
-        if (this.updateList.length == 0) {
+        if (this.versionList.length == 0) {
             this.query();
         }
         switch (EzUpdate.compareVer(this.currentVersion, this.getLatest())) {
@@ -169,20 +271,80 @@ class EzUpdate {
         }
     }
 
+    /**
+     * Return all versions in selected channel declared in ```.ezu```.
+     * @returns ```versionList```
+     */
     getList() {
-        return this.updateList;
+        return this.versionList;
     }
 
-    install(versionItem = {}, callback) {
+    /**
+     * Do installation with selected version.
+     * If download path is null, your update file will be downloaded in the directory where this file is.
+     *
+     * This method doesn't contains any detailed install commands.
+     * So for updating works executed after downloading the file, you should code your update commands in callback.
+     * For your information, EzU is providing some methods about resource replacing.
+     * How about checking them out?
+     * ```js
+     * install(versionObj, null, (path) => {
+     *   // your own installation commands
+     * });
+     * ```
+     * @param {Object} versionObj
+     * An element in ```versionList```.
+     * If it is an empty object, automatically get the latest update.
+     * @param {String} downloadPath
+     * Customize download path.
+     * @param {(path: String)=>{}} callback
+     * Called with download path after the download has been finished.
+     * @throws ```Error``` when ```versionObj``` is not set and update is unavailable.
+     */
+    install(versionObj = {}, downloadPath = null, callback) {
         // check again
-        if (versionItem == {}) {
+        if (versionObj == {}) {
             if (!this.isUpdateAvailable()) {
                 throw new Error("EzU : Update is unavailable. Set version manually if you want to do downgrade installation.");
             }
         }
-        this.download(versionItem.path, "./", callback);
+        if (downloadPath == null) {
+            downloadPath = Path.resolve("./EzUpdate.js").replace("EzUpdate.js", "");
+        }
+        this.download(versionObj.path, downloadPath, callback(downloadPath));
     }
 
+    /**
+     * Download file.
+     * @param {String} url
+     * @param {String} dir
+     * @param {(path)=>{}} callback
+     * Called with download path after the download has been finished.
+     */
+    download(url, dir, callback) {
+        download(BrowserWindow.getFocusedWindow(), url, { directory: dir }).then((dl) => {
+            callback(dl.getSavePath());
+        });
+    }
+
+    mergeJSON(newJSONPath, oldJSONPath) {
+        let newJ = JSON.parse(fs.readFileSync(newJSONPath, "utf-8"));
+        let oldJ = JSON.parse(fs.readFileSync(oldJSONPath, "utf-8"));
+        fs.writeFileSync(oldJSONPath, JSON.stringify(Object.assign({}, newJ, oldJ)));
+    }
+
+    replaceResource(newRes, oldRes) {
+        fs.rmSync(oldRes);
+        fs.copyFileSync(newRes, oldRes);
+        fs.rmSync(newRes);
+    }
+
+    /**
+     * Structuralize the content. Release elements are not allowed.
+     * @param {Object} release
+     * @param {String} content
+     * @returns Structured object
+     */
     static structure(release, content) {
         let obj = {};
         obj.rel = release.rel;
@@ -192,10 +354,22 @@ class EzUpdate {
         return obj;
     }
 
+    /**
+     * Extract innerText from element.
+     * @param {String} content
+     * @param {Object} elemObj
+     * @returns
+     */
     static extract(content, elemObj) {
         return content.substring(content.indexOf(elemObj.open) + elemObj.open.length, content.indexOf(elemObj.close)).trim();
     }
 
+    /**
+     * Compare two version information objects.
+     * @param {Object} a
+     * @param {Object} b
+     * @returns 0 when version is same, -1 when ```a``` is latest, 1 when ```b``` is latest.
+     */
     static compareVer(a, b) {
         let verA = a.ver + relOrder.indexOf(a.rel);
         let verB = b.ver + relOrder.indexOf(b.rel);
@@ -210,136 +384,6 @@ class EzUpdate {
             return 1;
         }
     }
-
-    download(url, dir, callback) {
-        download(BrowserWindow.getFocusedWindow(), url, { directory: dir }).then((dl) => {
-            callback(dl.getSavePath());
-        });
-    }
 }
 
 module.exports.EzUpdate = EzUpdate;
-
-/*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-module.exports.checkUpdate = (ezuPath, currentVersion, release, channel = stable, onlyLatest = true) => {
-    // parameter ispection
-    switch (true) {
-        case parseInt(currentVersion.replaceAll(".", "").replaceAll("_", "").replaceAll("-", "")) == NaN:
-            throw new TypeError("Only '.', '_', '-' are available to use for version.");
-            break;
-        case availRel.indexOf(release) == -1:
-            throw new TypeError('Release name "' + release + "\" isn't able to use. If you want to use this release, check out the comment about 'How to make the custom version release'.");
-            break;
-        case availRel.indexOf(channel) == -1:
-            throw new TypeError('Channel"' + channel + "\" isn't able to use. If you want to use this channel, check out the comment about 'How to make the custom version tag'.");
-            break;
-        default:
-            console.log("EzU : v." + EZU_VERSION);
-            console.log("EzU : Retrieving updates... Inputted version is " + currentVersion + " " + release.rel);
-            break;
-    }
-
-    getVerInfo(ezuPath, (html) => {
-        console.log("EzU : Update information request finished");
-        let updateList = devide(html, channel);
-        if (onlyLatest) {
-            console.log(sort(updateList)[0]);
-        } else {
-            console.log(sort(updateList));
-        }
-    });
-};
-
-function getVerInfo(url, callback, timeout = 3) {
-    let returnedHtml = "";
-    request(url, (error, response, html) => {
-        if (error) {
-            throw error;
-        }
-        returnedHtml = html;
-    });
-    checker = setInterval(() => {
-        if (returnedHtml != "") {
-            callback(returnedHtml);
-            clearInterval(checker);
-            return;
-        }
-    }, 100);
-    setTimeout(() => {
-        clearInterval(checker);
-    }, timeout * 1000);
-}
-
-function devide(html, channel) {
-    // Search release that is in the selected channel
-    let searchList = availRel.slice();
-    for (let i = 0; i < availRel.indexOf(channel); i++) {
-        searchList.shift();
-    }
-    let updateList = [];
-    searchList.forEach((release) => {
-        while (html.indexOf(release.open) != -1) {
-            let sPoint = html.indexOf(release.open);
-            let ePoint = html.indexOf(release.close);
-            let content = html.substring(sPoint + release.open.length, ePoint);
-            html = html.substring(0, sPoint) + html.substring(ePoint + release.close.length, html.length);
-            updateList.push(structure(release, content));
-        }
-    });
-    // console.log(updateList);
-    return updateList;
-}
-
-function structure(release, content) {
-    let obj = {};
-    obj.rel = release.rel;
-    obj.ver = extract(content, ver);
-    obj.description = extract(content, desc);
-    obj.path = extract(content, path);
-    return obj;
-}
-
-function extract(content, elemObj) {
-    return content.substring(content.indexOf(elemObj.open) + elemObj.open.length, content.indexOf(elemObj.close)).trim();
-}
-
-function sort(updateList) {
-    // The latest update precedes this array
-    updateList.sort((a, b) => compareVer(a, b));
-    return updateList;
-}
-
-function compareVer(a, b) {
-    let verA = a.ver + relOrder.indexOf(a.rel);
-    let verB = b.ver + relOrder.indexOf(b.rel);
-    if (verA > verB) {
-        // latest = a
-        return -1;
-    } else if (verA == verB) {
-        // same version
-        return 0;
-    } else if (verA < verB) {
-        // latest = b
-        return 1;
-    }
-}
-*/
