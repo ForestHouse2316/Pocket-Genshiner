@@ -21,7 +21,10 @@ contextBridge.exposeInMainWorld("api", {
     },
     checkUpdate: (callback) => {
         // (EzU.getLatest())=>{}
-        callback(ipcRenderer.sendSync("checkUpdate"));
+        ipcRenderer.send("checkUpdate");
+        ipcRenderer.on("updateAvailable", (event, r) => {
+            callback(r);
+        });
     },
     doUpdate: (callback) => {
         ipcRenderer.on("updateProgress", (event, value) => {

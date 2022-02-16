@@ -61,7 +61,7 @@ ipcMain.on("checkUpdate", (event) => {
         if (EzU.setChannel(DataManager.getJson().setting.updateChannel).isUpdateAvailable()) {
             let r = EzU.getLatest();
             r.currentVer = VERSION + " " + RELEASE.rel;
-            event.returnValue = r;
+            event.sender.send("updateAvailable", r);
         }
     });
 });
