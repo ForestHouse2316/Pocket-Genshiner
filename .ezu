@@ -1,0 +1,15 @@
+<alpha>
+    <ver>0.0.0</ver>
+    <description>
+        Initial version of PocketGenshiner :)
+        New features : Resin Timer / Daily Material / Official map
+    </description>
+    <path>https://github.com/ForestHouse2316/Pocket-Genshiner/releases/tag/v0.0.0-alpha</path>
+</alpha>
+<alpha>
+    <ver>0.0.1</ver>
+    <description>
+        Test : Auto-Upgrade system
+    </description>
+    <path>https://github.com/ForestHouse2316/Pocket-Genshiner/releases/tag/v0.0.1-alpha</path>
+</alpha>
