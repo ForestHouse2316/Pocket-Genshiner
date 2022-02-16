@@ -394,20 +394,24 @@ unit {
     -ms-user-select: text;
     font-size: 1rem;
 }
-#start_update_button {
+#start_update_button,
+#install_update_button {
     text-align: center;
     width: 100%;
     height: 8rem;
     transition: 0.5s;
 }
-#start_update_button:hover {
+#start_update_button:hover,
+#install_update_button:hover {
     height: 10rem;
 }
-#start_update_button p {
+#start_update_button p,
+#install_update_button p {
     font-size: 4rem;
     transition: 0.5s;
 }
-#start_update_button:hover p {
+#start_update_button:hover p,
+#install_update_button:hover p {
     font-size: 6rem;
 }
 #update_current_ver {
@@ -434,10 +438,16 @@ unit {
     opacity: 0;
     margin-left: 5%;
 }
+#install_update_button {
+    opacity: 0;
+}
 #update_status_container.visible {
     opacity: 1;
     height: 2rem !important;
     max-height: 2rem !important;
+}
+#install_update_button.visible {
+    opacity: 1;
 }
 progress {
     appearance: none;
@@ -453,14 +463,16 @@ progress {
 }
 #update_msg {
     transition: 0.5s;
-    font-size: 0s;
+    font-size: 0;
     height: 0;
     color: orange;
     font-weight: bold;
+    margin-left: 5%;
 }
 #update_msg.visible {
     font-size: 1.5rem;
     height: 1.5rem;
+    color: orange;
 }
 #update_progress_bar::-webkit-progress-bar {
 }

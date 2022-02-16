@@ -91,24 +91,34 @@ function setListeners() {
         document.getElementById("update").addEventListener("click", function () {
             let updateButton = document.getElementById("start_update_button");
             updateButton.addEventListener("click", () => {
-                updateButton.classList.toggle("clicked");
+                updateButton.classList.add("clicked");
                 let progressContainer = document.getElementById("update_status_container");
                 let bar = document.getElementById("update_progress_bar");
                 let percentText = document.getElementById("update_progress_percent");
                 let msgDiv = document.getElementById("update_msg");
+                let installButton = document.getElementById("install_update_button");
+
                 window.api.doUpdate((progress) => {
                     switch (typeof progress) {
                         case "string":
+                            msgDiv.innerText = progress;
                             msgDiv.classList.add("visible");
                             progressContainer.classList.remove("visible");
+                            installButton.classList.remove("visible");
                             if (progress.indexOf("Error") != -1) {
-                                frame.innerHTML = "";
+                                frame.innerHTML = ""; // remove update menu from menu bar
+                            } else if (progress == "Download has been finished") {
+                                installButton.classList.add("visible");
+                                installButton.addEventListener("click", () => {
+                                    window.api.installUpdate();
+                                });
                             }
                             break;
                         case "object":
                             msgDiv.classList.remove("visible");
                             progressContainer.classList.add("visible");
-                            let percent = parseFloat(progress.percent.replace("%", "")).toFixed(1);
+                            installButton.classList.remove("visible");
+                            let percent = parseFloat(progress.percent).toFixed(2);
                             percentText.innerText = String(percent) + "%";
                             bar.value = percent;
                             break;

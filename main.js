@@ -61,7 +61,7 @@ ipcMain.on("checkUpdate", (event) => {
         if (EzU.setChannel(DataManager.getJson().setting.updateChannel).isUpdateAvailable()) {
             let r = EzU.getLatest();
             r.currentVer = VERSION + " " + RELEASE.rel;
-            event.returnValue = r;
+            event.sender.send("updateAvailable", r);
         }
     });
 });
@@ -71,11 +71,17 @@ ipcMain.on("doUpdate", (event) => {
         event.sender.send("updateProgress", "Start downloading");
     });
     autoUpdater.on("update-not-available", () => {
-        event.sender.send("updateProgress", "Error : EzU and electron-updater are not returning the same results.");
+        event.sender.send("updateProgress", "Error : EzU and electron-updater are not returning the same results");
         autoUpdater.removeAllListeners();
     });
     autoUpdater.on("download-progress", (progressObj) => {
         let status = { speed: progressObj.bytesPerSecond, percent: progressObj.percent, fraction: progressObj.transferred + "/" + progressObj.total };
         event.sender.send("updateProgress", status);
     });
+    autoUpdater.on("update-downloaded", () => {
+        event.sender.send("updateProgress", "Download has been finished");
+    });
+});
+ipcMain.on("installUpdate", (event) => {
+    autoUpdater.quitAndInstall();
 });
