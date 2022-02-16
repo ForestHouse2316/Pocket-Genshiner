@@ -1,0 +1,476 @@
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+p {
+    font-size: 2rem;
+}
+unit {
+    font-size: 2rem;
+    display: inline-block;
+    width: 0;
+}
+
+#container {
+    overflow-y: auto;
+    padding-right: 12px;
+    margin-right: 10px;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    height: calc(100% - 1rem);
+    max-height: calc(100% - 1rem);
+
+    /* 100% - (rM + rP + bar width) - menu_bar - menu_bar margin */
+    /* right gap : 30px */ /* EXCEPT SCROLLBAR WIDTH 8px */
+    /* left gap : 5px */
+    width: calc(100% - 22px - 4rem - 10px);
+    max-width: calc(100% - 40px);
+
+    display: block;
+    text-align: center;
+}
+.custom_scroll.no_scrollbar {
+    padding-right: 0 !important;
+    /* 100% - (rM + rP + bar width) - menu_bar - menu_bar margin + (removed padding) */
+    width: calc(100% - 22px - 4rem - 10px + 12px) !important;
+    /* overflow-y: hidden; */
+}
+
+.custom_scroll::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.content_container {
+    border: 0;
+    /* height: 100%; */
+    min-height: max-content;
+    max-width: 100%;
+    min-width: 100%;
+    transition: 0.2s;
+    display: none;
+}
+.content_container.visible {
+    opacity: 1;
+}
+.content_container.invisible {
+    opacity: 0;
+}
+#content_webview {
+    height: 100%;
+}
+
+.upmost_container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-shrink: 0;
+}
+
+#menu_bar {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    transition: 0.5s;
+    transition-timing-function: cubic-bezier(0.43, 0.49, 0.03, 1.04);
+    justify-content: space-between;
+    z-index: 50;
+}
+
+#menu_bar.menu_open {
+    width: 25rem;
+    margin-right: -25rem;
+}
+#menu_bar.menu_close {
+    width: 4rem;
+    margin-right: -4rem;
+}
+
+#menu_icon {
+    height: 2em !important;
+    width: 2em !important;
+}
+.menu_close #menu_icon,
+.menu_close .menu_item img {
+    padding: 1em;
+    width: 2em;
+    transition: 0.5s;
+}
+.menu_open #menu_icon,
+.menu_open .menu_item img {
+    padding: 1em;
+    width: 3em;
+    transition: 0.5s;
+}
+#update {
+    height: 4rem !important;
+    transition: 0.3s;
+}
+
+#menu_separator {
+    height: 2px;
+    width: calc(100% - 0.2em);
+    margin: 0.4em 0.1em;
+}
+
+.menu_item {
+    width: 100%;
+    height: 6em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.menu_item p {
+    margin: 0 0.5em;
+}
+.menu_open .menu_item p {
+    opacity: 1;
+    font-size: 1.5em;
+    transition: 0.5s;
+}
+.menu_close .menu_item p {
+    opacity: 0;
+    font-size: 0em;
+    transition: 0.2s;
+}
+
+.horizontal_layout {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+}
+.vertical_layout {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+.horizontal_full {
+    width: 100%;
+}
+.vertical_full {
+    height: 100%;
+}
+.horizontal_scroll {
+    height: 5rem;
+    width: 100%;
+    padding: 0;
+}
+
+.dashboard_border {
+    border-width: 0.5rem;
+    border-style: solid;
+    border-radius: 10px;
+    padding: 0rem 2rem 3rem;
+    margin: 2rem 1rem;
+}
+.dashboard_content_header {
+    margin-bottom: 2rem;
+}
+
+.resin_img {
+    width: 3rem;
+    height: 3rem;
+}
+
+#dashboard_div {
+    text-align: center;
+}
+
+/*TODO Have to fix width of dm_list.*/
+#dashboard_grid {
+    /* 100% - LRpadding */
+    width: calc(100% - 6rem);
+    max-width: calc(100% -6rem);
+    padding: 3rem 3rem 1rem 3rem;
+    display: inline-grid;
+    /* grid-template-columns: repeat(8, calc(100%-6rem)); */
+    grid-template-columns: repeat(8, calc(calc(100vw - 6rem - 5rem - 30px * 7) / 8));
+    grid-template-rows: 20rem 70rem;
+    gap: 30px;
+    grid-template-areas:
+        "timer timer timer timer domain domain domain domain"
+        "todo todo todo todo todo todo todo todo";
+}
+.dashboard_item_header {
+    font-size: 2rem;
+    font-weight: bold;
+    white-space: nowrap;
+}
+.dashboard_item_header img,
+.text_size_img {
+    height: 3rem;
+    margin: 0 0 -0.8rem 0;
+    padding: 0;
+}
+.text_with_img {
+    display: inline-block;
+}
+
+#resin_timer {
+    grid-area: timer;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 7fr 8fr 5fr;
+    grid-template-areas:
+        "timer_head timer_head timer_head timer_head timer_head timer_head"
+        "timer_tno timer_display timer_display timer_display timer_display ."
+        ". timer_button_1 timer_button_2 timer_button_3 timer_button_4 .";
+}
+#resin_timer:hover .resin_timer_button {
+    opacity: 1 !important;
+}
+
+#resin_timer_header {
+    grid-area: timer_head;
+}
+#resin_timer_tno {
+    grid-area: timer_tno;
+}
+#resin_timer_tno > p {
+    font-size: 1rem;
+    margin-right: -0.5rem;
+}
+#resin_timer_tno > img {
+    height: 1rem !important;
+    margin-top: 0.2rem;
+}
+#resin_timer_display {
+    grid-area: timer_display;
+    font-size: 5rem;
+    margin: 0;
+    text-align: center;
+}
+#resin_timer_left {
+    /* grid-area: timer_left; */
+    text-align: start;
+}
+.resin_timer_button {
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+    opacity: 0;
+}
+.resin_timer_button > p {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.resin_timer_button > img {
+    height: 1.7rem;
+    margin-bottom: -0.3rem;
+}
+
+#resin_timer_button_1 {
+    grid-area: timer_button_1;
+}
+#resin_timer_button_2 {
+    grid-area: timer_button_2;
+}
+#resin_timer_button_3 {
+    grid-area: timer_button_3;
+}
+#resin_timer_button_4 {
+    grid-area: timer_button_4;
+}
+
+#daily_material {
+    grid-area: domain;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 7rem 7rem 1rem 5rem;
+    grid-template-areas:
+        "dm_head dm_head dm_head dm_head"
+        "dm_body dm_body dm_body dm_body"
+        "dm_info dm_info dm_info dm_info"
+        "dm_button_1 dm_button_2 dm_button_3 dm_button_4";
+    text-align: center;
+}
+#daily_material_header {
+    grid-area: dm_head;
+}
+#daily_material_list {
+    grid-area: dm_body;
+    display: inline-block;
+    margin: 1rem 1rem 2rem 1rem;
+    padding: 0 0 10px 0;
+    width: calc(100% - 2rem);
+    max-width: calc(100% - 2rem);
+    height: calc(5rem - 10px);
+    max-height: 5rem;
+    text-align: center;
+    white-space: nowrap;
+    overflow-y: hidden;
+}
+#daily_material_list > img {
+    height: calc(5rem - 10px);
+    display: inline-block;
+    margin: auto 0.5rem;
+}
+.dm_button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: 0.3s;
+}
+.dm_button:hover {
+    opacity: 1;
+}
+.dm_button p {
+    font-weight: bold;
+    font-size: 1.3rem;
+    margin: 0;
+}
+#daily_material_list_info {
+    grid-area: dm_info;
+    height: 1rem;
+    width: calc(100% - 0.3rem);
+    margin: -0.4rem 0 0 0.3rem;
+    text-align: start;
+    font-size: 1rem;
+    transition: 0.3s;
+    opacity: 0;
+}
+#daily_material:hover #daily_material_list_info {
+    opacity: 1;
+}
+#daily_material_list_button_1 {
+    grid-area: dm_button_1;
+}
+#daily_material_list_button_2 {
+    grid-area: dm_button_2;
+}
+#daily_material_list_button_3 {
+    grid-area: dm_button_3;
+}
+#daily_material_list_button_4 {
+    grid-area: dm_button_4;
+}
+
+#todo {
+    grid-area: todo;
+    background: #8e9ad1;
+}
+
+#update_div {
+    text-align: start;
+}
+#update_div p {
+    margin: 0.5rem 0 1rem 5%;
+}
+#update_title {
+    font-size: 7rem;
+    font-weight: bold;
+    display: inline;
+}
+#update_ver {
+    font-size: 3rem;
+}
+#update_desc {
+    font-size: 2rem;
+}
+#update_path {
+    user-select: text;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    font-size: 1rem;
+}
+#start_update_button,
+#install_update_button {
+    text-align: center;
+    width: 100%;
+    height: 8rem;
+    transition: 0.5s;
+}
+#start_update_button:hover,
+#install_update_button:hover {
+    height: 10rem;
+}
+#start_update_button p,
+#install_update_button p {
+    font-size: 4rem;
+    transition: 0.5s;
+}
+#start_update_button:hover p,
+#install_update_button:hover p {
+    font-size: 6rem;
+}
+#update_current_ver {
+    display: inline;
+    font-size: 1rem;
+}
+#start_update_button.clicked {
+    opacity: 0;
+    height: 0;
+}
+#start_update_button.clicked p {
+    font-size: 0;
+}
+
+#update_status_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    transition: 0.5s;
+    width: 100%;
+    max-width: 100%;
+    max-height: 0;
+    opacity: 0;
+    margin-left: 5%;
+}
+#install_update_button {
+    opacity: 0;
+}
+#update_status_container.visible {
+    opacity: 1;
+    height: 2rem !important;
+    max-height: 2rem !important;
+}
+#install_update_button.visible {
+    opacity: 1;
+}
+progress {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    display: block;
+    height: 2px;
+    width: 80%;
+}
+#update_progress_percent {
+    font-size: 1rem;
+    margin: 0 0 0 1rem;
+}
+#update_msg {
+    transition: 0.5s;
+    font-size: 0;
+    height: 0;
+    color: orange;
+    font-weight: bold;
+    margin-left: 5%;
+}
+#update_msg.visible {
+    font-size: 1.5rem;
+    height: 1.5rem;
+    color: orange;
+}

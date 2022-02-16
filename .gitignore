@@ -1,0 +1,11 @@
+/node_modules
+package-lock.json
+/res/design.pptx
+/res/~$design.pptx
+/dist
+/data
+res/logo.psd
+ezu.html
+.prettierignore
+electron-builder.yml
+/works
