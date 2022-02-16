@@ -474,7 +474,3 @@ progress {
     height: 1.5rem;
     color: orange;
 }
-#update_progress_bar::-webkit-progress-bar {
-}
-#update_progress_bar::-webkit-progress-value {
-}
