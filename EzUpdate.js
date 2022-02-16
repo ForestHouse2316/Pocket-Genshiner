@@ -64,10 +64,10 @@ class EzUpdate {
     /**
      * Program's current version.
      * ```js
-     * { ver: version, rel: release, }
+     * { ver: version, rel: release.rel, }
      * ```
      */
-    currentVersion = "";
+    currentVersion = {};
     /**
      * Store raw version of requested HTML.
      * Will only be changed when ```getVerInfo()``` is called,
@@ -122,7 +122,7 @@ class EzUpdate {
 
         this.currentVersion = {
             ver: version,
-            rel: release,
+            rel: release.rel,
         };
         this.ezuUrl = ezuUrl;
 
@@ -371,6 +371,8 @@ class EzUpdate {
      * @returns 0 when version is same, -1 when ```a``` is latest, 1 when ```b``` is latest.
      */
     static compareVer(a, b) {
+        console.log(a.rel);
+        console.log(b.rel);
         let verA = a.ver + relOrder.indexOf(a.rel);
         let verB = b.ver + relOrder.indexOf(b.rel);
         if (verA > verB) {

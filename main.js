@@ -71,15 +71,15 @@ ipcMain.on("doUpdate", (event) => {
         event.sender.send("updateProgress", "Start downloading");
     });
     autoUpdater.on("update-not-available", () => {
-        event.sender.send("updateProgress", "Error : EzU and electron-updater are not returning the same results.");
+        event.sender.send("updateProgress", "Error : EzU and electron-updater are not returning the same results");
         autoUpdater.removeAllListeners();
     });
     autoUpdater.on("download-progress", (progressObj) => {
         let status = { speed: progressObj.bytesPerSecond, percent: progressObj.percent, fraction: progressObj.transferred + "/" + progressObj.total };
         event.sender.send("updateProgress", status);
     });
-    autoUpdater.on("update_downloaded", () => {
-        event.sender.send(true);
+    autoUpdater.on("update-downloaded", () => {
+        event.sender.send("updateProgress", "Download has been finished");
     });
 });
 ipcMain.on("installUpdate", (event) => {
