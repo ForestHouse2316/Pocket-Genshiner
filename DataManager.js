@@ -1,10 +1,15 @@
 const fs = require("fs");
-const dirPath = "./data";
-const jsonPath = "./data/data.json";
-const logPath = "./data/log.txt";
+let rootPath = "";
+let dirPath = "/data";
+let jsonPath = "/data/data.json";
+let logPath = "/data/log.txt";
 let jsonData = {};
 
-module.exports.initialize = () => {
+module.exports.initialize = (root) => {
+    rootPath = root;
+    dirPath = root + dirPath;
+    jsonPath = root + jsonPath;
+    logPath = root + logPath;
     jsonData = {
         // initial form of the json structure
         dashboard: {
@@ -80,7 +85,7 @@ module.exports.log = (msg) => {
     });
     fs.appendFile(logPath, "\n[" + this.getTimeStamp() + "]  " + msg, (err) => {
         if (err) {
-            console.log("Cannot add a log to log.txt");
+            console.log("Cannot add a log to log.txt : " + msg);
         }
     });
     return this;

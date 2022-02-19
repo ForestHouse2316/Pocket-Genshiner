@@ -15,7 +15,7 @@ app.whenReady().then(() => {
     let verInfo = app.getVersion().split("-");
     VERSION = verInfo[0];
     RELEASE = release[verInfo[1]];
-    DataManager.initialize();
+    DataManager.initialize(app.getPath("userData"));
     createWindow();
     DataManager.log("App started");
 });
