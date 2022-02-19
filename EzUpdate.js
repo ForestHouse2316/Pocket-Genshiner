@@ -311,7 +311,7 @@ class EzUpdate {
         if (downloadPath == null) {
             downloadPath = Path.resolve("./EzUpdate.js").replace("EzUpdate.js", "");
         }
-        this.download(versionObj.path, downloadPath, callback(downloadPath));
+        this.download(versionObj.path, downloadPath, (filePath) => callback(filePath));
     }
 
     /**
