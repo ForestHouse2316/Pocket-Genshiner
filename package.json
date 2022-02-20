@@ -1,6 +1,6 @@
 {
     "name": "pocket-genshiner",
-    "version": "0.0.1-alpha",
+    "version": "0.0.2-alpha",
     "description": "The all-in-one Genshin information that is in your hand",
     "main": "main.js",
     "scripts": {
