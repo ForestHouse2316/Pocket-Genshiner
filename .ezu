@@ -1,9 +1,8 @@
 <alpha>
     <ver>0.0.0</ver>
-    <description>
-        Initial version of PocketGenshiner :)
+    <description> Initial version of PocketGenshiner :)
         New features : Resin Timer / Daily Material / Official map
-    </description>
+        </description>
     <path>https://github.com/ForestHouse2316/Pocket-Genshiner/releases/tag/v0.0.0-alpha</path>
 </alpha>
 <alpha>
@@ -14,6 +13,9 @@
     <path>https://github.com/ForestHouse2316/Pocket-Genshiner/releases/tag/v0.0.1-alpha</path>
 </alpha>
 <alpha>
-<ver>0.0.2</ver>
-<description></description>
+    <ver>0.0.2</ver>
+    <description>
+        Bugfix : Data files are now saved in AppData/Roaming/pocket-genshiner
+    </description>
+    <path>https://github.com/ForestHouse2316/Pocket-Genshiner/releases/tag/v0.0.2-alpha</path>
 </alpha>
