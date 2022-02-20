@@ -16,6 +16,7 @@ You can also check the latest update in the Pocket Genshiner.\
 ## Screenshots
 ![p1](https://github.com/ForestHouse2316/Pocket-Genshiner/blob/readme/Document/1.png?raw=true)
 ![p2](https://github.com/ForestHouse2316/Pocket-Genshiner/blob/readme/Document/2.png?raw=true)
+![p2](https://github.com/ForestHouse2316/Pocket-Genshiner/blob/readme/Document/3.png?raw=true)
 
 ## How to use?
 We are now on alpha...\
