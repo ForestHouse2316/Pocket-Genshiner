@@ -185,8 +185,9 @@ class EzUpdate {
         Request(this.ezuUrl, (error, response, html) => {
             if (error) {
                 console.log('EzU : Cannot get the update data. Check the "ezuUrl" and your internet connection.');
+            } else {
+                this.rawHTML = html;
             }
-            this.rawHTML = html;
         });
         // observe
         let checker = setInterval(() => {
@@ -196,7 +197,7 @@ class EzUpdate {
                 checker = null;
                 return;
             }
-        }, 100);
+        }, 500);
         //timeout
         setTimeout(() => {
             if (checker != null) {
