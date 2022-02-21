@@ -95,3 +95,12 @@ body {
 }
 
 /* -----------------------NEW_PROPERTIES----------------------- */
+#todo_add_item {
+    background-color: #006cc55e;
+}
+#todo_add_item:hover {
+    background-color: #0059ff2c;
+}
+.todo_item {
+    background-color: #d091ff0a;
+}

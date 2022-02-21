@@ -200,7 +200,7 @@ unit {
     display: inline-grid;
     /* grid-template-columns: repeat(8, calc(100%-6rem)); */
     grid-template-columns: repeat(8, calc(calc(100vw - 6rem - 5rem - 30px * 7) / 8));
-    grid-template-rows: 20rem 70rem;
+    grid-template-rows: 20rem 1fr;
     gap: 30px;
     grid-template-areas:
         "timer timer timer timer domain domain domain domain"
@@ -365,11 +365,6 @@ unit {
     grid-area: dm_button_4;
 }
 
-#todo {
-    grid-area: todo;
-    background: #8e9ad1;
-}
-
 #update_div {
     text-align: start;
 }
@@ -473,4 +468,69 @@ progress {
     font-size: 1.5rem;
     height: 1.5rem;
     color: orange;
+}
+
+#todo {
+    grid-area: todo;
+    background: #8e9ad12a;
+    padding: 0 0.5rem;
+    text-align: center;
+    overflow-y: auto;
+}
+#todo_add_item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: flex-start;
+    height: 5rem;
+    transition: 0.4s;
+    text-align: center;
+    padding: 0 0 2rem 0;
+    width: 100%;
+    margin: 0.5rem 0 1.5rem 0;
+}
+#todo_plus {
+    font-size: 4rem;
+    margin-top: 0;
+    margin-bottom: -1rem;
+}
+#todo_add_caption {
+    font-size: 1rem;
+}
+#todo_add_item > p {
+    display: block;
+}
+#todo_add_item:hover {
+    height: 8rem;
+}
+.todo_item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* 100% - LRpadding */
+    width: calc(100% - 2rem);
+    height: fit-content;
+    padding: 0.3rem 1rem;
+    margin: 1.5rem 0;
+    border-radius: 0.3rem;
+}
+.todo_item > img {
+    height: 1.5rem;
+    width: 1.5rem;
+    transition: 0.3s;
+    opacity: 0;
+}
+.todo_item > img:hover {
+    transform: rotate(180deg);
+}
+.todo_item:hover > img {
+    opacity: 1;
+}
+.todo_item > p {
+    text-align: start;
+    word-wrap: break-word;
+    max-width: 90%;
+    margin: 0;
+    padding: 0;
 }
