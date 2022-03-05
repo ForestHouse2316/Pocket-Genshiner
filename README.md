@@ -1,6 +1,11 @@
 # Pocket-Genshiner
+<img height="90px" src="https://github.com/ForestHouse2316/Pocket-Genshiner/blob/main/res/pg.png?raw=true" align="left"/>
+
+```
 
 The all-in-one Genshin information that is in your hand
+
+```
 
 ## Update Information
 
