@@ -30,7 +30,7 @@ You can also check the latest update in the Pocket Genshiner.\
 We are now on alpha...\
 We'll make the user manual after beta release.\
 There's no complex functions in this program now.\
-So, try it! Doesn't hard to use :)
+So, try it! Isn't hard to use :)
 
 ## Policy
 
