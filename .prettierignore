@@ -1,2 +1,4 @@
 .ezu
 ezu.html
+**/*.json
+*.json
