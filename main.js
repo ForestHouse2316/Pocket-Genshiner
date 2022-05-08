@@ -1,3 +1,4 @@
+// import * as Lodash from "lodash";
 const { app, BrowserWindow } = require("electron");
 const { ipcMain } = require("electron");
 const path = require("path");
@@ -55,6 +56,17 @@ ipcMain.on("saveTimer", (event, time) => {
 });
 ipcMain.on("getTimer", (event) => {
     event.returnValue = DataManager.calcTimeGap(DataManager.getJson().dashboard.resinTimer.lastSetTime);
+});
+ipcMain.on("addTodo", (event, id, msg) => {
+    DataManager.getJson()["dashboard"]["todo"][id] = {
+        msg: msg,
+        deadline: null,
+    };
+    DataManager.save();
+});
+ipcMain.on("removeTodo", (event, id) => {
+    delete DataManager.getJson()["dashboard"]["todo"][id];
+    DataManager.save();
 });
 ipcMain.on("checkUpdate", (event) => {
     let EzU = new EzUpdate(EZU_PATH, VERSION, RELEASE, () => {

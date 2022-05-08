@@ -1,3 +1,4 @@
+const Lodash = require("lodash");
 const fs = require("fs");
 let rootPath = "";
 let dirPath = "/data";
@@ -17,6 +18,12 @@ module.exports.initialize = (root) => {
                 lastSetTime: this.getTime(),
                 lastRemainedTime: "00:00:00", // remained time at lastSetTime
             },
+            todo: {
+                t1: {
+                    msg: "Make your own ToDo!",
+                    deadline: null,
+                },
+            },
         },
         checkIn: {},
         map: {},
@@ -27,18 +34,18 @@ module.exports.initialize = (root) => {
             updateChannel: { rel: "Stable", open: "<stable>", close: "</stable>" },
         },
     }; // use getJSON() to get this value
+
     fs.access(jsonPath, (err) => {
         if (!err) {
-            // read json
-            jsonData = Object.assign(jsonData, JSON.parse(fs.readFileSync(jsonPath, "utf-8")));
+            // read json and merge into jsonData variable (basic shape)
+            jsonData = Lodash.merge(jsonData, JSON.parse(fs.readFileSync(jsonPath, "utf-8")));
         } else {
             // if there's no json, make it
             if (!fs.existsSync(dirPath)) {
                 fs.mkdirSync(dirPath);
             }
-            this.save();
-            return this;
         }
+        this.save();
     });
 };
 

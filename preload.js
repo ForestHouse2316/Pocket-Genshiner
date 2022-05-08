@@ -4,7 +4,7 @@ contextBridge.exposeInMainWorld("api", {
     openURL: (path) => {
         shell.openExternal(path);
     },
-    getJson: (path) => {
+    getJson: () => {
         return ipcRenderer.sendSync("getJson");
     },
     save: () => {
@@ -18,6 +18,12 @@ contextBridge.exposeInMainWorld("api", {
     },
     getTimer: () => {
         return ipcRenderer.sendSync("getTimer");
+    },
+    addTodo: (id, msg) => {
+        ipcRenderer.send("addTodo", id, msg);
+    },
+    removeTodo: (id) => {
+        ipcRenderer.send("removeTodo", id);
     },
     checkUpdate: (callback) => {
         // (EzU.getLatest())=>{}

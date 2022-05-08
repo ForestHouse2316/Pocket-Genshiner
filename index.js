@@ -8,10 +8,11 @@ window.addEventListener("load", function () {
     console.log("--Page Load--");
     setSideMenuExtension();
     setMenuSelectListener();
-    setListeners();
     changeThemeTo(window.api.getJson().setting.theme); // Initial theme setting
     setResinTimer();
     initMaterialList();
+    setTodoList();
+    setListeners();
 });
 
 // --------------------------------------------------------------------------------
@@ -60,7 +61,7 @@ function setMenuSelectListener() {
 }
 
 function setListeners() {
-    // resin timer buttons
+    // resin timer
     document.getElementById("resin_timer_button_1").addEventListener("click", () => {
         adjustResinTimer(1, 20, 0, true);
     });
@@ -74,13 +75,44 @@ function setListeners() {
         adjustResinTimer(-1, -20, 0, true);
     });
 
-    // daily material list buttons
+    // daily material list
     for (let i = 1; i <= 4; i++) {
         document.getElementById("daily_material_list_button_" + String(i)).addEventListener("click", () => {
             setMaterialList(i);
         });
     }
 
+    // ToDo List Add
+    // Set Listener -> Event -> Listener -> Delete Self -> Set Listener
+    function setTodoAddBtn() {
+        document.getElementById("todo_add_item").addEventListener("click", function onTodoAddBtnClick() {
+            id = String(new Date().getTime());
+            // input box
+            window.api.addTodo(id, "test msg");
+            // add innerHTML
+            addTodoItem(id, "test msg");
+            document.getElementById("todo_add_item").removeEventListener("click", onTodoAddBtnClick);
+            setTodoAddBtn();
+        });
+    }
+    setTodoAddBtn();
+
+    // if we make todo moving function in later update, this should be modifieded at first
+    let todoIDs = Object.keys(window.api.getJson().dashboard.todo);
+    todoIDs.forEach((id) => {
+        id = String(id);
+        let todoItem = document.querySelector("#" + id);
+        let removeButton = document.querySelector("#" + id + " > img");
+        removeButton.addEventListener("click", () => {
+            console.log("Remove btn : " + id);
+            window.api.removeTodo(id);
+            todoItem.innerHTML = "";
+            let todoContainer = document.getElementById("todo");
+            todoContainer.innerHTML = todoContainer.innerHTML.replace('<div class="todo_item" id="' + id + '"></div>', "");
+        });
+    });
+
+    // auto-update
     window.api.checkUpdate((latestObj) => {
         let frame = document.getElementById("update_container");
         frame.innerHTML = '<div class="menu_item interaction_shade update_invisible" id="update"><img id="update_img" /><p>🪄Update available✨</p></div>' + frame.innerHTML;
@@ -187,7 +219,6 @@ function changeFrame(page) {
         }
         // set as invisible
         toggleVisibility();
-
         if (page.indexOf("https://") != -1) {
             // if path contains url, use webview
             setTimeout(() => {
@@ -385,4 +416,24 @@ function setMaterialList(optNum) {
         });
     });
     list.innerHTML = imgElems;
+}
+
+function setTodoList() {
+    todoJson = window.api.getJson().dashboard.todo;
+    try {
+        let todoIDs = Object.keys(todoJson);
+        if (todoIDs) {
+            // if not empty
+            todoIDs.forEach((id) => {
+                addTodoItem(id, todoJson[id].msg);
+            });
+        }
+    } catch (TypeError) {
+        console.log("Todo section does not exist.");
+    }
+}
+
+function addTodoItem(id, msg) {
+    // Add todo shell in the HTML code
+    document.getElementById("todo").innerHTML += '\n<div class="todo_item" id="' + id + '">\n<p>' + msg + '</p>\n<img src="res/x.png" class="rm_todo_item_button"/>\n</div>';
 }
