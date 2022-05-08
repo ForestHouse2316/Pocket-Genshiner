@@ -84,33 +84,37 @@ function setListeners() {
 
     // ToDo List Add
     // Set Listener -> Event -> Listener -> Delete Self -> Set Listener
-    function setTodoAddBtn() {
+    function setTodoItemListeners() {
+        // ToDo Add button
         document.getElementById("todo_add_item").addEventListener("click", function onTodoAddBtnClick() {
-            id = String(new Date().getTime());
+            id = "t" + String(new Date().getTime());
             // input box
             window.api.addTodo(id, "test msg");
             // add innerHTML
             addTodoItem(id, "test msg");
             document.getElementById("todo_add_item").removeEventListener("click", onTodoAddBtnClick);
-            setTodoAddBtn();
+            setTodoItemListeners();
+        });
+
+        // ToDo Item Listeners
+        // if we make todo moving function in later update, this should be modifieded at first
+        let todoIDs = Object.keys(window.api.getJson().dashboard.todo);
+        todoIDs.forEach((id) => {
+            id = String(id);
+            console.log(id);
+            let todoItem = document.querySelector("#" + id);
+            let removeButton = document.querySelector("#" + id + " > img");
+            removeButton.addEventListener("click", () => {
+                console.log("Remove btn : " + id);
+                window.api.removeTodo(id);
+                todoItem.innerHTML = "";
+                let todoContainer = document.getElementById("todo");
+                todoContainer.innerHTML = todoContainer.innerHTML.replace('<div class="todo_item" id="' + id + '"></div>', "");
+                setTodoItemListeners();
+            });
         });
     }
-    setTodoAddBtn();
-
-    // if we make todo moving function in later update, this should be modifieded at first
-    let todoIDs = Object.keys(window.api.getJson().dashboard.todo);
-    todoIDs.forEach((id) => {
-        id = String(id);
-        let todoItem = document.querySelector("#" + id);
-        let removeButton = document.querySelector("#" + id + " > img");
-        removeButton.addEventListener("click", () => {
-            console.log("Remove btn : " + id);
-            window.api.removeTodo(id);
-            todoItem.innerHTML = "";
-            let todoContainer = document.getElementById("todo");
-            todoContainer.innerHTML = todoContainer.innerHTML.replace('<div class="todo_item" id="' + id + '"></div>', "");
-        });
-    });
+    setTodoItemListeners();
 
     // auto-update
     window.api.checkUpdate((latestObj) => {

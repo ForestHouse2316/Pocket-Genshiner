@@ -19,7 +19,7 @@ module.exports.initialize = (root) => {
                 lastRemainedTime: "00:00:00", // remained time at lastSetTime
             },
             todo: {
-                t1: {
+                t0: {
                     msg: "Make your own ToDo!",
                     deadline: null,
                 },
