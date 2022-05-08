@@ -48,7 +48,7 @@ function setMenuSelectListener() {
         window.api.openURL("https://webstatic-sea.mihoyo.com/ys/event/signin-sea-v3/index.html?act_id=e202102251931481&mhy_auth_required=true&mhy_presentation_style=fullscreen&utm_source=tools&bbs_theme=dark&bbs_theme_device=1");
     });
     map.addEventListener("click", function () {
-        changeFrame("https://webstatic-sea.mihoyo.com/app/ys-map-sea/index.html?utm_source=tools&bbs_theme_device=1#/map/2");
+        changeFrame("https://webstatic-sea.hoyolab.com/ys/app/interactive-map");
         document.querySelector("#content_webview").shadowRoot.querySelector("iframe").height = "100%";
     });
     guide.addEventListener("click", function () {
@@ -201,7 +201,7 @@ function changeFrame(page) {
                 Just use some keywords, because we only use a few links...
                 */
                 var same = false;
-                var urls = ["webstatic-sea.mihoyo.com/app/ys-map-sea/index.html"];
+                var urls = ["webstatic-sea.hoyolab.com/ys/app/interactive-map"];
                 urls.forEach((url) => {
                     if (frames["webview"].src.indexOf(url) != -1 && page.indexOf(url) != -1) {
                         same = true;
