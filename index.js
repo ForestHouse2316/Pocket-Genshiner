@@ -101,7 +101,6 @@ function setListeners() {
         let todoIDs = Object.keys(window.api.getJson().dashboard.todo);
         todoIDs.forEach((id) => {
             id = String(id);
-            console.log(id);
             let todoItem = document.querySelector("#" + id);
             let removeButton = document.querySelector("#" + id + " > img");
             removeButton.addEventListener("click", () => {
