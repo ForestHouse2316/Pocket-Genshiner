@@ -104,3 +104,8 @@ body {
 .todo_item {
     background-color: #d091ff0a;
 }
+
+input {
+    background: #171836;
+    color: white;
+}

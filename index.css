@@ -473,9 +473,14 @@ progress {
 #todo {
     grid-area: todo;
     background: #8e9ad12a;
-    padding: 0 0.5rem;
+    padding: 0 0.5rem 1rem 0.5rem;
     text-align: center;
-    overflow-y: auto;
+    overflow-y: visible;
+    /* overflow-y: auto; */
+}
+#todo::-webkit-scrollbar {
+    opacity: 0;
+    height: 0 !important;
 }
 #todo_add_item {
     display: flex;
@@ -533,4 +538,23 @@ progress {
     max-width: 90%;
     margin: 0;
     padding: 0;
+}
+
+#todo_input {
+    width: 0;
+    height: 0;
+    opacity: 0;
+    transition: 0.2s;
+    margin: -2rem 0 0 0 !important;
+    padding: 0;
+    border: 0;
+    font-size: 2rem;
+    font-weight: 100;
+}
+#todo:hover > #todo_input {
+    width: calc(100% - 2rem);
+    height: 3rem !important;
+    opacity: 1;
+    margin: inherit !important;
+    padding: 0 1rem !important;
 }

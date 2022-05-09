@@ -87,11 +87,12 @@ function setListeners() {
     function setTodoItemListeners() {
         // ToDo Add button
         document.getElementById("todo_add_item").addEventListener("click", function onTodoAddBtnClick() {
-            id = "t" + String(new Date().getTime());
+            let id = "t" + String(new Date().getTime());
+            let msg = String(document.querySelector("#todo_input").value);
             // input box
-            window.api.addTodo(id, "test msg");
+            window.api.addTodo(id, msg);
             // add innerHTML
-            addTodoItem(id, "test msg");
+            addTodoItem(id, msg);
             document.getElementById("todo_add_item").removeEventListener("click", onTodoAddBtnClick);
             setTodoItemListeners();
         });

@@ -18,12 +18,7 @@ module.exports.initialize = (root) => {
                 lastSetTime: this.getTime(),
                 lastRemainedTime: "00:00:00", // remained time at lastSetTime
             },
-            todo: {
-                t0: {
-                    msg: "Make your own ToDo!",
-                    deadline: null,
-                },
-            },
+            todo: {},
         },
         checkIn: {},
         map: {},
@@ -44,7 +39,11 @@ module.exports.initialize = (root) => {
             if (!fs.existsSync(dirPath)) {
                 fs.mkdirSync(dirPath);
             }
+            // Initial todo content
+            jsonData.dashboard.todo.t0 = { msg: "Make your first ToDo!\n-PocketGenshiner", deadline: null };
         }
+        // The code below is the action that there is nothing in todo list.
+        // if (Object.keys(jsonData.dashboard.todo).length == 0) {}
         this.save();
     });
 };
