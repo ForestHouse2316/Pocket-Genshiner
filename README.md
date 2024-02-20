@@ -1,5 +1,6 @@
 # Pocket-Genshiner
 The all-in-one Genshin information that is in your hand
+## This is the paused(almost stopped) project. Sorry :(
 
 
 ## Update Information
